@@ -3,12 +3,20 @@ package com.ultimate.network;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 import com.ultimate.game.Player;
 import com.ultimate.game.UltimateFight;
+import com.ultimate.unit.Ace;
+import com.ultimate.unit.GameObject;
+import com.ultimate.unit.JobClass;
+import com.ultimate.unit.Luffy;
 import com.ultimate.unit.SkillObject;
+import com.ultimate.unit.Skill;
+import com.ultimate.unit.Vegeta;
 
 /**
  * 
@@ -60,14 +68,10 @@ public class GameServer {
 					Player player = (Player)data;
 					game.world.addPlayer(player.getPlayerID(), player);
 				}
-				/* Receive material object */
-				if(data instanceof SkillObject){
-					SkillObject object = (SkillObject)data;
+				if(data instanceof Skill){
+					Skill object = (Skill)data;
 					game.world.addObject(object);
-					System.out.println("Receive object");
 				}
-//				System.out.println(data instanceof SkillObject);
-//				System.out.println(data.getClass());
 			}
 			public void connected(Connection connection){
 				System.out.println("Has connected");
@@ -76,17 +80,15 @@ public class GameServer {
 	}
 	
 	private void registerKryonet(){
-		server.getKryo().register(com.ultimate.game.Player.class);
-		server.getKryo().register(com.ultimate.unit.Vegeta.class);
-		server.getKryo().register(com.ultimate.unit.Ace.class);
-		server.getKryo().register(com.ultimate.unit.Luffy.class);
-		server.getKryo().register(com.ultimate.unit.JobClass.class);
-		server.getKryo().register(com.ultimate.unit.GameObject.class);
-		server.getKryo().register(com.badlogic.gdx.math.Vector2.class);
-		server.getKryo().register(com.badlogic.gdx.math.Rectangle.class);
-		server.getKryo().register(com.ultimate.unit.SkillObject.class);
-		server.getKryo().register(com.ultimate.controller.GameCheckCollision.class);
-		server.getKryo().register(com.ultimate.game.UltimateFight.class);
-		server.getKryo().register(com.ultimate.network.GameWorld.class);
+		server.getKryo().register(Player.class);
+		server.getKryo().register(Vegeta.class);
+		server.getKryo().register(Ace.class);
+		server.getKryo().register(Luffy.class);
+		server.getKryo().register(JobClass.class);
+		server.getKryo().register(GameObject.class);
+		server.getKryo().register(Vector2.class);
+		server.getKryo().register(Rectangle.class);
+		server.getKryo().register(SkillObject.class);
+		server.getKryo().register(Skill.class);
 	}
 }

@@ -8,11 +8,12 @@ import com.ultimate.controller.WorldRenderer;
 import com.ultimate.game.Player;
 import com.ultimate.game.UltimateFight;
 import com.ultimate.unit.Map;
+import com.ultimate.unit.Skill;
 import com.ultimate.unit.SkillObject;
 
 public class GameWorld {
 	private TreeMap<Integer, Player> players;
-	private TreeMap<Integer, SkillObject> objects;
+	private TreeMap<Integer, Skill> objects;
 	public UltimateFight game;
 	public WorldRenderer renderer;
 	public Map map;
@@ -21,7 +22,7 @@ public class GameWorld {
 	public GameWorld(UltimateFight game){
 		players = new TreeMap<Integer, Player>();
 		renderer = new WorldRenderer(game);
-		objects = new TreeMap<Integer, SkillObject>();
+		objects = new TreeMap<Integer, Skill>();
 		this.game = game;
 	}
 	
@@ -31,6 +32,10 @@ public class GameWorld {
 	
 	public void setMap(Map map){
 		this.map = map;
+	}
+	
+	public TreeMap<Integer, Player> getPlayersMap(){
+		return players;
 	}
 	
 	public Iterator<Player> getPlayers(){
@@ -48,16 +53,16 @@ public class GameWorld {
 		Iterator<Player> iterPlayers = getPlayers();
 		while(iterPlayers.hasNext()){
 			Player eachPlayer = (Player)iterPlayers.next();
-			if(eachPlayer.getPlayerID() != player.getPlayerID() && eachPlayer.character.bounds.overlaps(player.character.bounds)){
+			if(eachPlayer.getPlayerID() != player.getPlayerID() && eachPlayer.character.getBounds().overlaps(player.character.getBounds())){
 				return true;
 			}
 		}
 		return false;
 	}
 
-	public void addObject(SkillObject object){
-		object.setID(skillID++);
-		objects.put(object.getID(), object);
+	public void addObject(Skill object){
+		object.setId(skillID++);
+		objects.put(object.getId(), object);
 	}
 
 	public void removeObject(int id){
@@ -65,8 +70,8 @@ public class GameWorld {
 		objects.remove(id);
 	}
 
-	public Iterator<SkillObject> getObjects(){
-		ArrayList<SkillObject> arrayObjects = new ArrayList<SkillObject>(); 
+	public Iterator<Skill> getObjects(){
+		ArrayList<Skill> arrayObjects = new ArrayList<Skill>(); 
 		for(int id: objects.keySet())
 			arrayObjects.add(objects.get(id));
 		return arrayObjects.iterator();

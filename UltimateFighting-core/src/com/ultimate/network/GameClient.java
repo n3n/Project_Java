@@ -2,13 +2,21 @@ package com.ultimate.network;
 
 import java.io.IOException;
 
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
-import com.esotericsoftware.minlog.Log;
+import com.ultimate.controller.GameCheckCollision;
 import com.ultimate.game.Player;
 import com.ultimate.game.UltimateFight;
+import com.ultimate.unit.Ace;
+import com.ultimate.unit.GameObject;
+import com.ultimate.unit.JobClass;
+import com.ultimate.unit.Luffy;
 import com.ultimate.unit.SkillObject;
+import com.ultimate.unit.Skill;
+import com.ultimate.unit.Vegeta;
 /**
  * 
  * @author FallenGo
@@ -17,24 +25,30 @@ import com.ultimate.unit.SkillObject;
  */
 public class GameClient {
 	private Client client;
-	int port = 52227;
-	String ipAddress;
+	private int port = 52227;
+	private String ipAddress;
 	UltimateFight game;
 	
 	public GameClient(final UltimateFight game, String ipAddress){
+		
 		this.ipAddress = ipAddress;
 		this.game = game;
+		
 		// Initial game world
 		game.world = new GameWorld(game);
 		
 		// Initial game client
 		client = new Client();
 		registerKryonet();
+		
 		// Add listener to client
 		initListener();
+		
 		// Start client
 		client.start();
+		
 		game.world.addPlayer(game.player.getPlayerID(), game.player);
+		
 		// Try connect to server
 		try {
 			client.connect(5000, ipAddress, port, port);
@@ -54,10 +68,6 @@ public class GameClient {
 	public void sendData(Object object){
 		try {
 			client.sendUDP(object);
-			if(object instanceof SkillObject){
-				System.out.println("Send! " + (object instanceof SkillObject));
-			}
-			Log.DEBUG();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -74,25 +84,20 @@ public class GameClient {
 					Player player = (Player)data;
 					game.world.addPlayer(player.getPlayerID(), player);
 				}
-				else if(data instanceof SkillObject){
-					
-				}
 			}
 		});
 	}
 	
 	private void registerKryonet(){
-		client.getKryo().register(com.ultimate.game.Player.class);
-		client.getKryo().register(com.ultimate.unit.Vegeta.class);
-		client.getKryo().register(com.ultimate.unit.Ace.class);
-		client.getKryo().register(com.ultimate.unit.Luffy.class);
-		client.getKryo().register(com.ultimate.unit.JobClass.class);
-		client.getKryo().register(com.ultimate.unit.GameObject.class);
-		client.getKryo().register(com.badlogic.gdx.math.Vector2.class);
-		client.getKryo().register(com.badlogic.gdx.math.Rectangle.class);
-		client.getKryo().register(com.ultimate.unit.SkillObject.class);
-		client.getKryo().register(com.ultimate.controller.GameCheckCollision.class);
-		client.getKryo().register(com.ultimate.game.UltimateFight.class);
-		client.getKryo().register(com.ultimate.network.GameWorld.class);
+		client.getKryo().register(Player.class);
+		client.getKryo().register(Vegeta.class);
+		client.getKryo().register(Ace.class);
+		client.getKryo().register(Luffy.class);
+		client.getKryo().register(JobClass.class);
+		client.getKryo().register(GameObject.class);
+		client.getKryo().register(Vector2.class);
+		client.getKryo().register(Rectangle.class);
+		client.getKryo().register(SkillObject.class);
+		client.getKryo().register(Skill.class);
 	}
 }
