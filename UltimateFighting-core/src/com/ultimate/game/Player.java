@@ -1,7 +1,7 @@
 package com.ultimate.game;
 
 import com.ultimate.unit.JobClass;
-import com.ultimate.unit.Vegeta;
+import com.ultimate.unit.Luffy;
 
 
 public class Player {
@@ -11,7 +11,7 @@ public class Player {
 	
 	public Player(){
 		id = (int)(Math.random()*1000000);
-		character = new Vegeta();
+		character = new Luffy();
 	}
 	
 	public int getPlayerID(){

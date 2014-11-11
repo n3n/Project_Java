@@ -6,29 +6,30 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.ultimate.network.GameClient;
 import com.ultimate.network.GameServer;
+import com.ultimate.network.GameWorld;
 import com.ultimate.screen.MainMenuScreen;
 
 public class UltimateFight extends Game implements ApplicationListener {
 	
 	public SpriteBatch batch;
-	public static Player player;
+	public Player player;
 	public GameServer server;
 	public GameClient client;
+	public GameWorld world;
 	
 	float stateTime = 0;
 	TextureRegion currentFrame;
 	
-	@Override
-	public void create () {
+	public void create() {
 		batch = new SpriteBatch();
 		player = new Player();
 		Assets.load();
+		this.setScreen(new MainMenuScreen(this));
 	}
 
-	@Override
-	public void render () {
+	public void render() {
 		super.render();
-		setScreen(new MainMenuScreen(this));
-//		setScreen(new GameScreen(this));
 	}
+	
+	
 }
