@@ -5,19 +5,19 @@ import com.badlogic.gdx.math.Vector2;
 
 public abstract class GameObject {
 	
-	public Vector2 position;
-	public Rectangle bounds;
+	private Vector2 position;
+	private Rectangle bounds;
 	
-	public GameObject(float x, float y, int width, int height){
-		position = new Vector2(x, y);
-		bounds = new Rectangle(x, y, width, height);
+	public GameObject(){
+		position = new Vector2();
+		bounds = new Rectangle();
 	}
 	
-	public void setBounds(int x, int y, int width, int height){
+	public void setBounds(float x, float y, int width, int height){
 		bounds.set(x, y, width, height);
 	}
 	
-	public void setPosition(int x, int y){
+	public void setPosition(float x, float y){
 		position.set(x, y);
 	}
 	

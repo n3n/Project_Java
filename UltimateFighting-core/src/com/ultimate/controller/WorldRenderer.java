@@ -80,11 +80,11 @@ public class WorldRenderer {
 		}
 		if(player.character.isRight()){
 			if(keyFrame.isFlipX()) keyFrame.flip(true, false);
-			game.batch.draw(keyFrame, player.character.position.x, player.character.position.y);
+			game.batch.draw(keyFrame, player.character.getPosition().x, player.character.getPosition().y);
 		}
 		else{
 			if(!keyFrame.isFlipX()) keyFrame.flip(true, false);
-			game.batch.draw(keyFrame, player.character.position.x, player.character.position.y);
+			game.batch.draw(keyFrame, player.character.getPosition().x, player.character.getPosition().y);
 		}
 		
 	}

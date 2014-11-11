@@ -11,6 +11,7 @@ import com.ultimate.controller.GameCheckCollision;
 import com.ultimate.controller.GameInputProcessor;
 import com.ultimate.game.Player;
 import com.ultimate.game.UltimateFight;
+import com.ultimate.unit.Skill;
 
 public class GameScreen extends ScreenBase implements Screen{
 	UltimateFight game;

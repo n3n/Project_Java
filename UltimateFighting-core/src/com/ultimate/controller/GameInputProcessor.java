@@ -50,7 +50,7 @@ public class GameInputProcessor {
 		Iterator<Box> objects = map.getObject().iterator();
 		while(objects.hasNext()){
 			Box object = (Box) objects.next();
-			if(object.bounds.overlaps(game.player.character.bounds)){
+			if(object.getBounds().overlaps(game.player.character.getBounds())){
 				System.out.println("Collision detected!!");
 				return true;
 			}

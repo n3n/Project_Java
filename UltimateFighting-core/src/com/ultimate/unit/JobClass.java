@@ -23,29 +23,34 @@ public abstract class JobClass extends GameObject{
 	public final static int STATE_HURT = 11;
 	public final static int STATE_ULTIMATE = 12;
 	
+	public JobClass(){
+		
+	}
+	
 	public JobClass(float x, float y, int width, int height){
-		super(x, y, width, height);
+		setPosition(x, y);
+		setBounds(getPosition().x,getPosition().y, width, height);
 		velocity = new Vector2();
 	}
 	
 	public void moveRight(float x){
-		position = new Vector2(position.x += x, position.y);
-		bounds.setPosition(position);
+		setPosition(getPosition().x += x, getPosition().y);
+		getBounds().setPosition(getPosition());
 	}
 	
 	public void moveLeft(float x){
-		position = new Vector2(position.x -= x, position.y);
-		bounds.setPosition(position);
+		setPosition(getPosition().x -= x, getPosition().y);
+		getBounds().setPosition(getPosition());
 	}
 	
 	public void moveUp(float y){
-		position = new Vector2(position.x, position.y += y);
-		bounds.setPosition(position);
+		setPosition(getPosition().x, getPosition().y += y);
+		getBounds().setPosition(getPosition());
 	}
 	
 	public void moveDown(float y){
-		position = new Vector2(position.x, position.y -= y);
-		bounds.setPosition(position);
+		setPosition(getPosition().x, getPosition().y -= y);
+		getBounds().setPosition(getPosition());
 	}
 	
 	public int getType(){
