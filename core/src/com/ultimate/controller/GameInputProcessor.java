@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.ultimate.game.UltimateFight;
 import com.ultimate.unit.Box;
 import com.ultimate.unit.JobClass;
@@ -30,7 +31,7 @@ public class GameInputProcessor {
 				game.player.character.setSTATE(JobClass.STATE_STAND);
 				game.player.character.setAction(false);
 			}
-			if(Gdx.input.isKeyPressed(Keys.J)){
+			if(Gdx.input.isKeyJustPressed(Keys.J)){
 				atk1();
 			}
 			else if(Gdx.input.isKeyPressed(Keys.SPACE)){
@@ -56,13 +57,19 @@ public class GameInputProcessor {
 	}
 	
 	static boolean collision(){
-		Iterator<Box> objects = map.getObject().iterator();
-		while(objects.hasNext()){
-			Box object = (Box) objects.next();
-			if(object.getBounds().overlaps(game.player.character.getBounds())){
-				System.out.println("Collision detected!!");
-				return true;
+		try{
+			Iterator<Box> objects = map.getObject().iterator();
+			while(objects.hasNext()){
+				Box object = (Box) objects.next();
+				if(object.getBounds().overlaps(game.player.character.getBounds())){
+//					System.out.println("Collision detected!!");
+					return true;
+				}
 			}
+			return false;
+		}
+		catch(GdxRuntimeException e){
+			
 		}
 		return false;
 	}
@@ -76,10 +83,10 @@ public class GameInputProcessor {
 				game.player.character.moveRight(game.player.character.getSpeed());
 			}
 			
-			if(Gdx.input.isKeyPressed(Keys.K)){
+			if(Gdx.input.isKeyJustPressed(Keys.K)){
 				atkForward();
 			}
-			else if(Gdx.input.isKeyPressed(Keys.J)){
+			else if(Gdx.input.isKeyJustPressed(Keys.J)){
 				atk1();
 			}
 			else if(Gdx.input.isKeyPressed(Keys.SPACE)){
@@ -105,10 +112,10 @@ public class GameInputProcessor {
 			}
 			
 
-			if(Gdx.input.isKeyPressed(Keys.K)){
+			if(Gdx.input.isKeyJustPressed(Keys.K)){
 				atkForward();
 			}
-			else if(Gdx.input.isKeyPressed(Keys.J)){
+			else if(Gdx.input.isKeyJustPressed(Keys.J)){
 				atk1();
 			}
 			else if(Gdx.input.isKeyPressed(Keys.SPACE)){
@@ -125,7 +132,7 @@ public class GameInputProcessor {
 	}
 	
 	private void atk1(){
-		if(!game.player.character.isAction() && Gdx.input.isKeyPressed(Keys.J)){
+		if(!game.player.character.isAction() && Gdx.input.isKeyJustPressed(Keys.J)){
 			game.player.character.setSTATE(JobClass.STATE_ATK1);
 			game.player.character.setAction(true);
 			game.player.character.atk1(game);
@@ -133,7 +140,7 @@ public class GameInputProcessor {
 	}
 	
 	private void atkForward(){
-		if(!game.player.character.isAction() && Gdx.input.isKeyPressed(Keys.K)){
+		if(!game.player.character.isAction() && Gdx.input.isKeyJustPressed(Keys.K)){
 			game.player.character.setSTATE(JobClass.STATE_ATK2);
 			game.player.character.setAction(true);
 			game.player.character.atk2(game);
@@ -159,7 +166,7 @@ public class GameInputProcessor {
 							}
 						}
 						game.player.character.setSTATE(JobClass.STATE_JUMP_DOWN);
-//						for(int i = 1; i <= 30; i++){
+
 						while(true){
 							Thread.sleep(6);
 							if(Gdx.input.isKeyPressed(Keys.D)) moveRight();
