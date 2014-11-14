@@ -7,6 +7,7 @@ import java.util.TreeMap;
 import com.ultimate.controller.WorldRenderer;
 import com.ultimate.game.Player;
 import com.ultimate.game.UltimateFight;
+import com.ultimate.unit.JobClass;
 import com.ultimate.unit.Map;
 import com.ultimate.unit.Skill;
 
@@ -52,6 +53,9 @@ public class GameWorld {
 		Iterator<Player> iterPlayers = getPlayers();
 		while(iterPlayers.hasNext()){
 			Player eachPlayer = (Player)iterPlayers.next();
+			if(eachPlayer.character.getHp() <= 0){
+				getPlayersMap().get(eachPlayer.getPlayerID()).character.setSTATE(JobClass.STATE_DEAD);
+			}
 			if(eachPlayer.getPlayerID() != player.getPlayerID() && eachPlayer.character.getBounds().overlaps(player.character.getBounds())){
 				return true;
 			}
