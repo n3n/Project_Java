@@ -6,9 +6,16 @@ public class Skill extends GameObject{
 	private int player_id;
 	private int type;
 	private boolean isPassed = false;
+	private int turn;
 	
-	public static final int TYPE_ATK = 1;
-	
+	public int getTurn() {
+		return turn;
+	}
+
+	public void setTurn(int turn) {
+		this.turn = turn;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -45,7 +52,7 @@ public class Skill extends GameObject{
 		
 	}
 	
-	public static final int LUFFY_ATK = 1;
-	public static final int LUFFY_FORWORD_ATK = 2;
+	public static final int TYPE_ATK = 1;
+	public static final int TYPE_FORWARD_ATK = 2;
 	
 }
