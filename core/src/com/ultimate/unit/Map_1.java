@@ -8,9 +8,19 @@ public class Map_1 extends Map {
 	public final static int WIDTH = 400;
 	public final static int HEIGHT = 1000;
 	public final static int TYPE = 1;
-	private int[][] spawnPos = {
-			{0,0},
-			{1,1}
+	public static final int[][] spawnPos = {
+			{40,52},
+			{130,52},
+			{171,124},
+			{281,52},
+			{331,52},
+			{381,52},
+			{441,52},
+			{526,124},
+			{576,52},
+			{636,52},
+			{686,52},
+			{726,52}
 			}; 
 	public Map_1(){
 		objects = new Array<Box>();
