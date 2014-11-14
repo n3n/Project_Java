@@ -51,11 +51,9 @@ public class WorldRenderer {
 						keyFrame = Assets.luffyJumpDown.getKeyFrame(player.getStateTime() , Animation2.ANIMATION_LOOPING);
 						break;
 					case JobClass.STATE_ATK2:
-//						new Thread(){ public void run(){ Game } }.start();
 						keyFrame = Assets.luffyForwardAtk.getKeyFrame(player.getStateTime() , Animation2.ANIMATION_LOOPING);
 						break;
 					case JobClass.STATE_HURT:
-						System.out.println("Hurt!");
 						keyFrame = Assets.luffyHurt.getKeyFrame(player.getStateTime() , Animation2.ANIMATION_LOOPING);
 						break;
 				}
