@@ -5,7 +5,6 @@ import java.util.Iterator;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.ultimate.game.UltimateFight;
-import com.ultimate.screen.GameScreen;
 import com.ultimate.unit.Box;
 import com.ultimate.unit.JobClass;
 import com.ultimate.unit.Map;
@@ -13,8 +12,8 @@ import com.ultimate.unit.Map_1;
 
 public class GameInputProcessor {
 
-	UltimateFight game;
-	Map map;
+	private static UltimateFight game;
+	private static Map map;
 	
 	public GameInputProcessor(UltimateFight game){
 		this.game = game;
@@ -26,27 +25,37 @@ public class GameInputProcessor {
 	}
 
 	public void processor(){
-		
-		if(!game.player.character.isAction()){
-			game.player.character.setSTATE(JobClass.STATE_STAND);
-			game.player.character.setAction(false);
-		}
-		if(Gdx.input.isKeyPressed(Keys.J)){
-			atk1();
-		}
-		else if(Gdx.input.isKeyPressed(Keys.SPACE)){
-			jump();
-		}
-		else if(Gdx.input.isKeyPressed(Keys.A) ){
-			moveLeft();
-		}
-		else if(Gdx.input.isKeyPressed(Keys.D) ){
-			moveRight();
+		if(game.player.character.getSTATE() != JobClass.STATE_DEAD){
+			if(!game.player.character.isAction()){
+				game.player.character.setSTATE(JobClass.STATE_STAND);
+				game.player.character.setAction(false);
+			}
+			if(Gdx.input.isKeyPressed(Keys.J)){
+				atk1();
+			}
+			else if(Gdx.input.isKeyPressed(Keys.SPACE)){
+				jump();
+			}
+			else if(Gdx.input.isKeyPressed(Keys.A) ){
+				moveLeft();
+			}
+			else if(Gdx.input.isKeyPressed(Keys.D) ){
+				moveRight();
+			}
+			if( (!game.player.character.isAction() && !collision()) ){
+				game.player.character.setSTATE(JobClass.STATE_JUMP_DOWN);
+	//			game.player.character.setAction(true);
+				game.player.character.moveDown(4);
+			}
+			if(collision()){
+				game.player.character.setSTATE(JobClass.STATE_STAND);
+				game.player.character.moveUp(4);
+			}
 		}
 		//		GameServer.sendToAllConnention(game.player);
 	}
 	
-	private boolean collision(){
+	static boolean collision(){
 		Iterator<Box> objects = map.getObject().iterator();
 		while(objects.hasNext()){
 			Box object = (Box) objects.next();
@@ -66,6 +75,7 @@ public class GameInputProcessor {
 			if(collision()){
 				game.player.character.moveRight(game.player.character.getSpeed());
 			}
+			
 			if(Gdx.input.isKeyPressed(Keys.K)){
 				atkForward();
 			}
@@ -93,6 +103,8 @@ public class GameInputProcessor {
 			if(collision()){
 				game.player.character.moveLeft(game.player.character.getSpeed());
 			}
+			
+
 			if(Gdx.input.isKeyPressed(Keys.K)){
 				atkForward();
 			}
@@ -130,7 +142,7 @@ public class GameInputProcessor {
 	
 	private void jump(){
 		if(Gdx.input.isKeyPressed(Keys.SPACE) && !game.player.character.isAction() && game.player.character.getSTATE() != JobClass.STATE_JUMP_DOWN && game.player.character.getSTATE() != JobClass.STATE_JUMP_UP){
-			game.player.setStateTime(GameScreen.stateTime);
+			game.player.setStateTime(0);
 			game.player.character.setAction(true);
 			new Thread(new Runnable(){
 				public void run(){
@@ -140,11 +152,16 @@ public class GameInputProcessor {
 							Thread.sleep(15);
 							if(Gdx.input.isKeyPressed(Keys.D)) moveRight();
 							else if(Gdx.input.isKeyPressed(Keys.A)) moveLeft();
-							game.player.character.moveUp(3);
+							game.player.character.moveUp(4);
+							if(collision()){
+								game.player.character.moveDown(4);
+								break;
+							}
 						}
 						game.player.character.setSTATE(JobClass.STATE_JUMP_DOWN);
-						for(int i = 1; i <= 30; i++){
-							Thread.sleep(15);
+//						for(int i = 1; i <= 30; i++){
+						while(true){
+							Thread.sleep(6);
 							if(Gdx.input.isKeyPressed(Keys.D)) moveRight();
 							else if(Gdx.input.isKeyPressed(Keys.A)) moveLeft();
 							game.player.character.moveDown(4);
