@@ -12,7 +12,7 @@ public class Luffy extends JobClass {
 	public static final int timeForwardAtk = 210;
 
 	public Luffy() {
-		super(0, 0, WIDTH, HEIGHT);
+		super(60, 60, WIDTH, HEIGHT);
 		setHp(10000);
 		setMp(100);
 		setDef(100);
@@ -46,7 +46,7 @@ public class Luffy extends JobClass {
 					
 					if(!game.player.character.isRight()){
 						
-						game.player.setStateTime(0);
+						game.player.setStateTime(0f);
 						Thread.sleep(300);
 						
 						game.player.character.moveLeft(110);
@@ -54,7 +54,8 @@ public class Luffy extends JobClass {
 						object.setPosition(game.player.character.getPosition().x-30, game.player.character.getPosition().y);
 						object.setBounds(game.player.character.getPosition().x, game.player.character.getPosition().y, 140, 70);
 						object.setPlayer_id(game.player.getPlayerID());
-						object.setType(Skill.LUFFY_FORWORD_ATK);
+						object.setType(Skill.TYPE_ATK);
+						object.setTurn(-1);
 						if(game.server != null){
 							game.world.addObject(object);
 						}
@@ -72,6 +73,7 @@ public class Luffy extends JobClass {
 						object.setBounds(game.player.character.getPosition().x, game.player.character.getPosition().y, 140, 70);
 						object.setPlayer_id(game.player.getPlayerID());
 						object.setType(Skill.LUFFY_FORWORD_ATK);
+						object.setTurn(1);
 						if(game.server != null){
 							game.world.addObject(object);
 						}
