@@ -21,14 +21,40 @@ public class ServerProcessing {
 	
 	public void update(){
 		pointer.set(Gdx.input.getX(), Gdx.input.getY());
-		fallCheck();
+//		fallCheck();
+		atk();
 	}
 	
 	private void fallCheck(){
 		for(int id: game.world.getPlayersMap().keySet()){
-			if(game.world.getPlayersMap().get(id).character.getPosition().y <= -200){
+			if(game.world.getPlayersMap().get(id).character.getPosition().y <= -200 || game.world.getPlayersMap().get(id).character.getHp() <= 0){
 				game.world.getPlayersMap().get(id).setJob(new Luffy());
 			}
+		}
+	}
+	
+	private void atk(){
+		try{
+			for(int skill_id: game.world.getObjectMap().keySet()){
+				Skill object = game.world.getObjectMap().get(skill_id);
+				System.out.printf("id: %d, owner id: %d, turn: %d, type: %d\n", object.getId(), object.getPlayer_id(), object.getTurn(), object.getType());
+				for(int player_id: game.world.getPlayersMap().keySet()){
+					Player player = game.world.getPlayersMap().get(player_id);
+					if(player.character.getBounds().overlaps(object.getBounds()) && player.getPlayerID() != object.getPlayer_id() ){
+						System.out.println("Player: "+player.getPlayerID()+ ", HP: "+player.character.getHp()+", Type: "+player.character.getType()+", State: "+player.character.getSTATE());
+//						System.out.println("Before, Player: "+player.getPlayerID()+" HP: "+player.character.getHp());
+						player.character.setHp(player.character.getHp()-100);
+//						System.out.println("After, Player: "+player.getPlayerID()+" HP: "+player.character.getHp());
+//						game.world.getPlayersMap().replace(player.getPlayerID(), player);
+						game.world.getPlayersMap().put(player.getPlayerID(), player);
+//						System.out.println("Player:"+player.getPlayerID()+" HP: "+player.character.getHp());
+						System.out.printf("Player: %d was attacked\n, HP: %f", player.getPlayerID(), game.world.getPlayersMap().get(player_id).character.getHp());
+					}
+				}
+				game.world.removeObject(skill_id);
+			}
+		}catch(ConcurrentModificationException e){
+			
 		}
 	}
 	
@@ -76,7 +102,7 @@ public class ServerProcessing {
 					}
 				}
 				switch (object.getType()) {
-					case Skill.LUFFY_FORWORD_ATK:
+					case Skill.TYPE_FORWARD_ATK:
 						game.world.removeObject(object.getId());
 						break;
 				}
