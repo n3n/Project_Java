@@ -53,6 +53,10 @@ public abstract class JobClass extends GameObject{
 		getBounds().setPosition(getPosition());
 	}
 	
+	public void getDmg(){
+		this.hp -= 100;
+	}
+	
 	public int getType(){
 		return type;
 	}
