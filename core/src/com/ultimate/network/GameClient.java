@@ -2,6 +2,7 @@ package com.ultimate.network;
 
 import java.io.IOException;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.esotericsoftware.kryonet.Client;
@@ -9,6 +10,7 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.ultimate.game.Player;
 import com.ultimate.game.UltimateFight;
+import com.ultimate.screen.GameScreen;
 import com.ultimate.unit.Ace;
 import com.ultimate.unit.GameObject;
 import com.ultimate.unit.JobClass;
@@ -25,8 +27,8 @@ public class GameClient {
 	private Client client;
 	private int port = 52227;
 	UltimateFight game;
-	
-	public GameClient(final UltimateFight game, String ipAddress){
+	private String ipAddress = "";
+	public GameClient(final UltimateFight game){
 		
 		this.game = game;
 		
@@ -45,20 +47,27 @@ public class GameClient {
 		
 		game.world.addPlayer(game.player.getPlayerID(), game.player);
 		
-		// Try connect to server
-		try {
-			client.connect(5000, ipAddress, port, port);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+
 		
 
-		try {
-			client.sendUDP(game.player);
-			System.out.println("Send!");
-		} catch (Exception e) {
-			System.out.println("Can't connected");
-		}
+//		try {
+//			client.sendUDP(game.player);
+//			System.out.println("Send!");
+//		} catch (Exception e) {
+//			System.out.println("Can't connected");
+//		}
+	}
+	
+	public void tryConnect() throws IOException{
+		client.connect(10000, ipAddress, port, port);
+	}
+	
+	public void setIP(String ip){
+		this.ipAddress = ip;
+	}
+	
+	public String getIP(){
+		return this.ipAddress;
 	}
 	
 	public void sendData(Object object){
@@ -78,6 +87,7 @@ public class GameClient {
 			public void received (Connection connection, Object data) {
 				if(data instanceof Player) {
 					Player player = (Player)data;
+//					System.out.println("Player: ("+player.character.getPosition().x+", "+player.character.getPosition().y+")");
 					game.world.addPlayer(player.getPlayerID(), player);
 				}
 			}
