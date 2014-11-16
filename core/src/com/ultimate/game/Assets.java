@@ -1,6 +1,8 @@
 package com.ultimate.game;
 
+import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
@@ -37,6 +39,54 @@ public class Assets {
 	
 	public static Texture bg_mainMenu;
 	public static Texture map_1;
+	public static Texture blood;
+	public static Texture blood_tunk;
+	public static Texture bg;
+	public static Texture multiplayer;
+	public static Texture multiplayer_onclick;
+	public static Texture howtoplay;
+	public static Texture howtoplay_onclick;
+	public static Texture exit;
+	public static Texture exit_onclick;
+	public static Texture create;
+	public static Texture create_onclick;
+	public static Texture creategame;
+	public static Texture creategame_onclick;
+	public static Texture join;
+	public static Texture join_onclick;
+	public static Texture credit;
+	public static Texture credit_onclick;
+	public static Texture joingame;
+	public static Texture joingame_onclick;
+	public static Texture left;
+	public static Texture left_onclick;
+	public static Texture right;
+	public static Texture right_onclick;
+	public static Texture logo;
+	public static Texture back;
+	public static Texture back_onclick;
+	public static Texture play;
+	public static Texture play_onclick;
+	public static Texture entername;
+	public static Texture battleselect;
+	public static Texture map_alale;
+	public static Texture map_deathnote;
+	public static Texture map_dragonball;
+	public static Texture map_jojo;
+	public static Texture map_naruto;
+	public static Texture map_saintseiya;
+	public static Texture state_deathnote;
+	public static Texture state_naruto;
+	public static Texture state_alale;
+	public static Texture state_dragonball;
+	public static Texture state_jojo;
+	public static Texture state_saintseiya;
+	public static Texture nametag;
+	public static Texture ipaddress;
+	
+	public static Sound click;
+	public static Sound atk;
+	public static Sound atk2;
 	
 	public static void load(){
 		loadVegeta();
@@ -211,13 +261,66 @@ public class Assets {
 	private static void loadEtc(){
 		bg_mainMenu = loadTexture("dark-wood_158357.jpg");
 		map_1 = loadTexture("maps/test_map_1.png");
+		blood = loadTexture("Materials/blood.png");
+		blood_tunk = loadTexture("Materials/bloodtunk.png");
+		bg = loadTexture("Materials/bg.png");
+		multiplayer = loadTexture("Materials/multiplayer.png");
+		multiplayer_onclick = loadTexture("Materials/multiplayer_onclick.png");
+		credit = loadTexture("Materials/credit.png");
+		credit_onclick = loadTexture("Materials/credit_onclick.png");
+		howtoplay = loadTexture("Materials/howtoplay.png");
+		howtoplay_onclick = loadTexture("Materials/howtoplay_onclick.png");
+		exit = loadTexture("Materials/exit.png");
+		exit_onclick = loadTexture("Materials/exit_onclick.png");
+		logo = loadTexture("Materials/Logo.png");
+		create = loadTexture("Materials/create.png");
+		create_onclick = loadTexture("Materials/create_onclick.png");
+		creategame = loadTexture("Materials/creategame.png");
+		creategame_onclick = loadTexture("Materials/creategame_onclick.png");
+		joingame = loadTexture("Materials/joingame.png");
+		joingame_onclick = loadTexture("Materials/joingame_onclick.png");
+		join = loadTexture("Materials/join.png");
+		join_onclick = loadTexture("Materials/join_onclick.png");
+		back  = loadTexture("Materials/back.png");
+		back_onclick = loadTexture("Materials/back_onclick.png");
+		battleselect = loadTexture("Materials/battleselect.png");
+		left = loadTexture("Materials/left.png");
+		left_onclick = loadTexture("Materials/left_onclick.png");
+		right = loadTexture("Materials/right.png");
+		right_onclick = loadTexture("Materials/right_onclick.png");
+		map_alale = loadTexture("Materials/alale.png");
+		map_deathnote = loadTexture("Materials/deathnote.png");
+		map_dragonball= loadTexture("Materials/dragonball.png");
+		map_jojo = loadTexture("Materials/jojo.png");
+		map_naruto = loadTexture("Materials/naruto.png");
+		map_saintseiya = loadTexture("Materials/saintseiya.png");
+		state_alale = loadTexture("Materials/alale_stage.png");
+		state_deathnote = loadTexture("Materials/deathnote_stage.png");
+		state_dragonball= loadTexture("Materials/dragonball_stage.png");
+		state_jojo = loadTexture("Materials/jojo_stage.png");
+		state_naruto = loadTexture("Materials/naruto_stage.png");
+		state_saintseiya = loadTexture("Materials/saintseiya_stage.png");
+		play = loadTexture("Materials/play.png");
+		play_onclick = loadTexture("Materials/play_onclick.png");
+		entername = loadTexture("Materials/entername.png");
+		nametag = loadTexture("Materials/nametag.png");
+		ipaddress = loadTexture("Materials/ipaddress.png");
+		click = loadSound("sound/029.mp3");
+		atk = loadSound("sound/01_Luffy_B_audio.mp3");
+		atk2 = loadSound("sound/014.mp3");
+	}
+	
+	public static Sound loadSound(String file){
+		return Gdx.audio.newSound(Gdx.files.internal(file));
 	}
 	
 	public static TextureRegion loadSprite(String file){
+		Gdx.app.log("Load", "TextureRegion: assets" + file);
 		return new TextureRegion(new Texture(Gdx.files.internal(file)));
 	}
 	
 	public static Texture loadTexture(String file){
+		Gdx.app.log("Load", "Texture: assets" + file);
 		return new Texture(file);
 	}
 }
