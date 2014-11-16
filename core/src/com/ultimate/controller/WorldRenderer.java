@@ -1,5 +1,6 @@
 package com.ultimate.controller;
 
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.ultimate.game.Animation2;
 import com.ultimate.game.Assets;
@@ -18,6 +19,7 @@ public class WorldRenderer {
 	
 	public void render(Player player){
 		TextureRegion keyFrame = null;
+		
 		switch(player.character.getType()){
 			case 1: // Vegeta
 				switch(player.character.getSTATE()){
@@ -92,6 +94,11 @@ public class WorldRenderer {
 			if(!keyFrame.isFlipX()) keyFrame.flip(true, false);
 			game.batch.draw(keyFrame, player.character.getPosition().x, player.character.getPosition().y);
 		}
+		BitmapFont name;
+		name = new BitmapFont();
+		name.scale(0.01f);
+		name.setColor(1f, 1f, 1f, 1f);
+		name.draw(game.batch, player.getName(), player.character.getPosition().x-20, player.character.getPosition().y+70);
 		
 	}
 	
