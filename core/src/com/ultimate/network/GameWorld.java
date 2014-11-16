@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.TreeMap;
 
+import com.sun.xml.internal.org.jvnet.fastinfoset.ExternalVocabulary;
 import com.ultimate.controller.WorldRenderer;
 import com.ultimate.game.Player;
 import com.ultimate.game.UltimateFight;
@@ -27,7 +28,19 @@ public class GameWorld {
 	}
 	
 	public void addPlayer(int id, Player player){
-		players.put(id, player);
+		
+		try{
+			Player temp = players.get(id);
+			if( (player.character.getHp() <= temp.character.getHp()) || temp.character.getHp() == 0 && player.character.getHp() == 1000){
+				players.put(id, player);
+			}
+			else if(game.server != null){
+				players.put(id, player);
+			}
+			
+		}catch(Exception e){
+			players.put(id, player);
+		}
 	}
 	
 	public void setMap(Map map){
@@ -36,6 +49,10 @@ public class GameWorld {
 	
 	public TreeMap<Integer, Player> getPlayersMap(){
 		return players;
+	}
+	
+	public void removePlayer(int id){
+		players.remove(id);
 	}
 	
 	public Iterator<Player> getPlayers(){
@@ -54,7 +71,7 @@ public class GameWorld {
 		while(iterPlayers.hasNext()){
 			Player eachPlayer = (Player)iterPlayers.next();
 			if(eachPlayer.character.getHp() <= 0){
-				getPlayersMap().get(eachPlayer.getPlayerID()).character.setSTATE(JobClass.STATE_DEAD);
+//				getPlayersMap().get(eachPlayer.getPlayerID()).character.setSTATE(JobClass.STATE_DEAD);
 			}
 			if(eachPlayer.getPlayerID() != player.getPlayerID() && eachPlayer.character.getBounds().overlaps(player.character.getBounds())){
 				return true;

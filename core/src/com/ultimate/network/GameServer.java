@@ -54,6 +54,7 @@ public class GameServer {
 	
 	public void sendToAllConnention(Object object){
 		server.sendToAllUDP(object);
+		server.sendToAllTCP(object);
 	}
 	
 	/**
