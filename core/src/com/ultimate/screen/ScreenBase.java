@@ -17,12 +17,20 @@ public abstract class ScreenBase implements Screen{
 	public ScreenBase(){
 		param.size = 60;
 		param.characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^?.,/\\()&*_+-=;:'\"[]{}";
-		font = getFont();
+		font = genFont();
 	}
 	
-	public BitmapFont getFont(){
+	public BitmapFont genFont(){
 		return generator.generateFont(param);
 	}
+	public BitmapFont getFont() {
+		return font;
+	}
+
+	public void setFont(BitmapFont font) {
+		this.font = font;
+	}
+
 	public void setFont(int size){
 		param.size = size;
 	}
