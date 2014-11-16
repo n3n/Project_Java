@@ -2,7 +2,6 @@ package com.ultimate.unit;
 
 import com.ultimate.game.Assets;
 import com.ultimate.game.UltimateFight;
-import com.ultimate.network.StateTime;
 import com.ultimate.screen.GameScreen;
 
 public class Luffy extends JobClass {
@@ -13,7 +12,7 @@ public class Luffy extends JobClass {
 
 	public Luffy() {
 		super(60, 60, WIDTH, HEIGHT);
-		setHp(10000);
+		setHp(1000);
 		setMp(100);
 		setDef(100);
 		setmDef(100);
@@ -22,6 +21,7 @@ public class Luffy extends JobClass {
 		setSpeed(10);
 		setGravity(1.5f);
 		setType(2);
+		setSTATE(JobClass.STATE_STAND);
 	}
 	
 	public void atk1(final UltimateFight game){
@@ -29,7 +29,27 @@ public class Luffy extends JobClass {
 			public void run() {
 				game.player.setStateTime(0);
 				try {
-					Thread.sleep(300);
+					Thread.sleep(20);
+					Skill object = new Skill();
+					object.setPlayer_id(game.player.getPlayerID());
+					object.setType(Skill.TYPE_ATK);
+					if(!game.player.character.isRight()){
+						object.setPosition(game.player.character.getPosition().x-20, game.player.character.getPosition().y);
+						object.setBounds(game.player.character.getPosition().x, game.player.character.getPosition().y, 20, 70);
+						object.setTurn(-1);
+					}
+					else{
+						object.setPosition(game.player.character.getPosition().x-20, game.player.character.getPosition().y);
+						object.setBounds(game.player.character.getPosition().x, game.player.character.getPosition().y, 20, 70);
+						object.setTurn(-1);
+					}
+					if(game.server != null){
+						game.world.addObject(object);
+					}
+					else if(game.client != null){
+						game.client.sendData(object);
+					}
+					Thread.sleep(220);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -54,7 +74,7 @@ public class Luffy extends JobClass {
 						object.setPosition(game.player.character.getPosition().x-30, game.player.character.getPosition().y);
 						object.setBounds(game.player.character.getPosition().x, game.player.character.getPosition().y, 140, 70);
 						object.setPlayer_id(game.player.getPlayerID());
-						object.setType(Skill.TYPE_ATK);
+						object.setType(Skill.TYPE_FORWARD_ATK);
 						object.setTurn(-1);
 						if(game.server != null){
 							game.world.addObject(object);
@@ -72,7 +92,7 @@ public class Luffy extends JobClass {
 						object.setPosition(game.player.character.getPosition().x+140, game.player.character.getPosition().y);
 						object.setBounds(game.player.character.getPosition().x, game.player.character.getPosition().y, 140, 70);
 						object.setPlayer_id(game.player.getPlayerID());
-						object.setType(Skill.LUFFY_FORWORD_ATK);
+						object.setType(Skill.TYPE_FORWARD_ATK);
 						object.setTurn(1);
 						if(game.server != null){
 							game.world.addObject(object);
