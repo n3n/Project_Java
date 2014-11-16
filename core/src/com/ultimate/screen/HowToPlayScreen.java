@@ -1,5 +1,7 @@
 package com.ultimate.screen;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.ultimate.game.UltimateFight;
 
 public class HowToPlayScreen extends ScreenBase {
@@ -11,7 +13,11 @@ public class HowToPlayScreen extends ScreenBase {
 	}
 	
 	public void render(float delta) {
-	
+		Gdx.gl.glClearColor(1, 1, 1, 0.5f);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		game.batch.begin();
+		game.batch.setColor(1.0f, 0f, 0f, 0.5f);
+		game.batch.end();
 	}
 
 	@Override

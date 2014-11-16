@@ -3,10 +3,12 @@ package com.ultimate.controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Rectangle;
+import com.ultimate.game.Assets;
 import com.ultimate.game.UltimateFight;
 import com.ultimate.network.GameClient;
 import com.ultimate.screen.CreateServerScreen;
 import com.ultimate.screen.GameScreen;
+import com.ultimate.screen.JoinServerScreen;
 import com.ultimate.screen.MainMenuScreen;
 import com.ultimate.screen.MultiplayerMenuScreen;
 
@@ -17,37 +19,40 @@ public class MultiplayerMenuController extends GameController {
 	public MultiplayerMenuController(UltimateFight game, MultiplayerMenuScreen screen){
 		this.game = game;
 		this.screen = screen;
-		
+		pointer = new Rectangle();
+		pointer.setSize(2, 2);
 	}
 	
 	public void update(){
-		x = Gdx.input.getX();
-		y = Gdx.input.getY();
-		pointer = new Rectangle(x, y, 2, 2);
-		
-		screen.fontCreateServer.setColor(Color.BLACK);
-		screen.fontJoinServer.setColor(Color.BLACK);
-		screen.fontBack.setColor(Color.BLACK);
+		pointer.setPosition(Gdx.input.getX(), Gdx.input.getY());
 		
 		if(screen.boundCreateServer.overlaps(pointer)){
-			screen.fontCreateServer.setColor(Color.BLUE);
+			game.batch.draw(Assets.creategame_onclick, (Gdx.graphics.getWidth()/2)-(screen.width/2), screen.y);
 			if(Gdx.input.isButtonPressed(0)){
+				Assets.click.play();
+				screen.dispose();
+				Gdx.app.log("Screen", "To Create server screen");
 				game.setScreen(new CreateServerScreen(game));
 			}
 
 		}
 		else if(screen.boundJoinServer.overlaps(pointer)){
-			screen.fontJoinServer.setColor(Color.BLUE);
+			game.batch.draw(Assets.joingame_onclick, (Gdx.graphics.getWidth()/2)-(screen.width/2), screen.y-120);
 			if(Gdx.input.isButtonPressed(0)){
-//				game.setScreen(new JoinServerScreen(game));
-				game.client = new GameClient(game, "127.0.0.1");
-				game.setScreen(new GameScreen(game));
+				Assets.click.play();
+				screen.dispose();
+				Gdx.app.log("Screen", "To JoinServer screen");
+				game.setScreen(new JoinServerScreen(game));
 			}
 
 		}
 		else if(screen.boundBack.overlaps(pointer)){
-			screen.fontBack.setColor(Color.BLUE);
+			game.batch.draw(Assets.back_onclick, 30, 30);
 			if(Gdx.input.isButtonPressed(0)){
+				Assets.click.play();
+				screen.dispose();
+				Gdx.app.log("Screen", "To Mainmenu screen");
+				try {Thread.sleep(100);} catch (InterruptedException e) {}
 				game.setScreen(new MainMenuScreen(game));
 			}
 		}

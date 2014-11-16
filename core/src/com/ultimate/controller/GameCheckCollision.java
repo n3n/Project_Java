@@ -23,8 +23,18 @@ public class GameCheckCollision{
 					for(int player_id: game.world.getPlayersMap().keySet()){
 						final Player player = game.world.getPlayersMap().get(player_id);
 						if((player.getPlayerID() != object.getPlayer_id()) && object.getBounds().overlaps(player.character.getBounds()) && !object.isPassed()){
-							System.out.println("Player: "+player.getPlayerID()+" was attacked by player: "+object.getPlayer_id());
-							game.world.getPlayersMap().get(player.getPlayerID()).character.setHp(game.world.getPlayersMap().get(player.getPlayerID()).character.getHp()-100);
+//							System.out.println("Player: "+player.getPlayerID()+" was attacked by player: "+object.getPlayer_id());
+//							System.out.println("Player: " + player.getPlayerID());
+//							game.world.getPlayersMap().get(player.getPlayerID()).character.setHp(game.world.getPlayersMap().get(player.getPlayerID()).character.getHp()-100);
+//							float hp = game.world.getPlayersMap().get(player.getPlayerID()).character.getHp();
+//							game.world.getPlayersMap().get(player.getPlayerID()).character.setHp(hp- 100);
+							game.world.getPlayersMap().get(player.getPlayerID()).character.getDmg();
+							Player aa = game.world.getPlayersMap().get(player.getPlayerID());
+							System.out.println("HP: " + aa.character.getHp());
+							aa.character.getDmg();
+							System.out.println("HP: " + aa.character.getHp());
+							game.server.sendToAllConnention(game.world.getPlayersMap().get(player.getPlayerID()));
+//							System.out.println(game.world.getPlayersMap().get(player.getPlayerID()).character.getHp());
 							new Thread(){
 								public void run(){
 									game.player.setStateTime(0);
@@ -63,7 +73,10 @@ public class GameCheckCollision{
 						}
 					}
 					switch (object.getType()) {
-						case Skill.LUFFY_FORWORD_ATK:
+						case Skill.TYPE_FORWARD_ATK:
+							game.world.removeObject(object.getId());
+							break;
+						case Skill.TYPE_ATK:
 							game.world.removeObject(object.getId());
 							break;
 					}

@@ -5,18 +5,20 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
 import com.ultimate.controller.MultiplayerMenuController;
+import com.ultimate.game.Assets;
 import com.ultimate.game.UltimateFight;
 
 public class MultiplayerMenuScreen extends ScreenBase {
 	UltimateFight game;
 	
-	public BitmapFont fontCreateServer;
-	public BitmapFont fontJoinServer;
-	public BitmapFont fontBack;
-	
 	public Rectangle boundCreateServer;
 	public Rectangle boundJoinServer;
 	public Rectangle boundBack;
+	
+	public int width = 220;
+	public int height = 89;
+	public int x = (Gdx.graphics.getWidth()/2)-(width/2);
+	public int y = 300;
 	
 	MultiplayerMenuController controller;
 	
@@ -24,29 +26,23 @@ public class MultiplayerMenuScreen extends ScreenBase {
 		this.game = game;
 		controller = new MultiplayerMenuController(game, this);
 		
-		// Font
-		fontCreateServer = getFont();
-		fontJoinServer = getFont();
-		fontBack = getFont();
 		// Rectangle
-		boundCreateServer = new Rectangle((Gdx.graphics.getWidth()/2)-90, 165, 240, 40);
-		boundJoinServer = new Rectangle((Gdx.graphics.getWidth()/2)-90, 265 , 100, 40);
-		boundBack = new Rectangle((Gdx.graphics.getWidth()/2)-90, 365, 100, 40);
+		boundCreateServer = new Rectangle(x, (Gdx.graphics.getHeight()-y)-height, width, height);
+		boundJoinServer = new Rectangle(x, (Gdx.graphics.getHeight()-(y-120))-height , width, height);
+		try {Thread.sleep(100);}catch (InterruptedException e) {}
+		boundBack = new Rectangle(30, (Gdx.graphics.getHeight()-30)-58, 68, 58);
+		
 	}
 	
 	public void render(float delta) {
-
-//		if(Gdx.input.isKeyPressed(Keys.L)){
-//			game.setScreen(new JoinServerScreen(game));
-//			game.client = new GameClient(game, "127.0.0.1");
-//			game.setScreen(new GameScreen(game));
-//		}
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		controller.update();
 		game.batch.begin();
-		fontCreateServer.draw(game.batch, "Create Server", (Gdx.graphics.getWidth()/2)-100, (Gdx.graphics.getHeight()/2)+100);
-		fontJoinServer.draw(game.batch, "Join Server", (Gdx.graphics.getWidth()/2)-100, (Gdx.graphics.getHeight()/2));
+		game.batch.draw(Assets.bg, 0, 0);
+		game.batch.draw(Assets.creategame, x, y);
+		game.batch.draw(Assets.joingame, x, y-120);
+		game.batch.draw(Assets.back, 30, 30);
+		controller.update();
 		game.batch.end();
 	}
 
@@ -71,7 +67,10 @@ public class MultiplayerMenuScreen extends ScreenBase {
 	}
 
 	public void dispose() {
-	
+		boundBack = null;
+		boundCreateServer = null;
+		boundJoinServer = null;
+		controller = null;
 	}
 
 }
