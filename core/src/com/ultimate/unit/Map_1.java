@@ -24,10 +24,6 @@ public class Map_1 extends Map {
 			}; 
 	public Map_1(){
 		objects = new Array<Box>();
-//		objects.add(new Box(-1, -110, 1000, 100)); // Ground
-//		objects.add(new Box(-120, -1, 100, 1100)); // Wall left
-//		objects.add(new Box(1000, -1, 2, 1100)); // Wall right
-//		objects.add(new Box(-1, -1, 1000, 1)); // Ground
 		objects.add(new Box(-1, -1, 2, 1100)); // Wall left
 		objects.add(new Box(780, -1, 2, 1100)); // Wall right
 		objects.add(new Box(0, 22, 200, 28)); // left ground
