@@ -5,6 +5,7 @@ import java.util.Iterator;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.ultimate.game.Assets;
 import com.ultimate.game.UltimateFight;
 import com.ultimate.unit.Box;
 import com.ultimate.unit.JobClass;
@@ -32,15 +33,18 @@ public class GameInputProcessor {
 				game.player.character.setAction(false);
 			}
 			if(Gdx.input.isKeyJustPressed(Keys.J)){
+				System.out.println("J");
 				atk1();
 			}
 			else if(Gdx.input.isKeyPressed(Keys.SPACE)){
 				jump();
 			}
 			else if(Gdx.input.isKeyPressed(Keys.A) ){
+				System.out.println("A");
 				moveLeft();
 			}
 			else if(Gdx.input.isKeyPressed(Keys.D) ){
+				System.out.println("D");
 				moveRight();
 			}
 			if( (!game.player.character.isAction() && !collision()) ){
@@ -63,10 +67,11 @@ public class GameInputProcessor {
 				Box object = (Box) objects.next();
 				if(object.getBounds().overlaps(game.player.character.getBounds())){
 //					System.out.println("Collision detected!!");
+					
 					return true;
 				}
 			}
-			return false;
+			/**return false;*/
 		}
 		catch(GdxRuntimeException e){
 			
@@ -133,6 +138,7 @@ public class GameInputProcessor {
 	
 	private void atk1(){
 		if(!game.player.character.isAction() && Gdx.input.isKeyJustPressed(Keys.J)){
+			Assets.atk.play();
 			game.player.character.setSTATE(JobClass.STATE_ATK1);
 			game.player.character.setAction(true);
 			game.player.character.atk1(game);
@@ -141,6 +147,7 @@ public class GameInputProcessor {
 	
 	private void atkForward(){
 		if(!game.player.character.isAction() && Gdx.input.isKeyJustPressed(Keys.K)){
+			Assets.atk2.play();
 			game.player.character.setSTATE(JobClass.STATE_ATK2);
 			game.player.character.setAction(true);
 			game.player.character.atk2(game);
