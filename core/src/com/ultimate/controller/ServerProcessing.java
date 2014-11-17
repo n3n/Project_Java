@@ -21,16 +21,7 @@ public class ServerProcessing {
 	
 	public void update(){
 		pointer.set(Gdx.input.getX(), Gdx.input.getY());
-//		fallCheck();
 		atk();
-	}
-	
-	private void fallCheck(){
-		for(int id: game.world.getPlayersMap().keySet()){
-			if(game.world.getPlayersMap().get(id).character.getPosition().y <= -200 || game.world.getPlayersMap().get(id).character.getHp() <= 0){
-				game.world.getPlayersMap().get(id).setJob(new Luffy());
-			}
-		}
 	}
 	
 	private void atk(){
@@ -41,13 +32,10 @@ public class ServerProcessing {
 				for(int player_id: game.world.getPlayersMap().keySet()){
 					Player player = game.world.getPlayersMap().get(player_id);
 					if(player.character.getBounds().overlaps(object.getBounds()) && player.getPlayerID() != object.getPlayer_id() ){
-						System.out.println("Player: "+player.getPlayerID()+ ", HP: "+player.character.getHp()+", Type: "+player.character.getType()+", State: "+player.character.getSTATE());
-//						System.out.println("Before, Player: "+player.getPlayerID()+" HP: "+player.character.getHp());
+//						System.out.println("Player: "+player.getPlayerID()+ ", HP: "+player.character.getHp()+", Type: "+player.character.getType()+", State: "+player.character.getSTATE());
 						player.character.setHp(player.character.getHp()-100);
-//						System.out.println("After, Player: "+player.getPlayerID()+" HP: "+player.character.getHp());
-//						game.world.getPlayersMap().replace(player.getPlayerID(), player);
-						game.world.getPlayersMap().put(player.getPlayerID(), player);
-//						System.out.println("Player:"+player.getPlayerID()+" HP: "+player.character.getHp());
+						game.world.addPlayer(player.getPlayerID(), player);
+						game.server.sendToAllConnention(player);
 						System.out.printf("Player: %d was attacked\n, HP: %f", player.getPlayerID(), game.world.getPlayersMap().get(player_id).character.getHp());
 					}
 				}

@@ -71,7 +71,10 @@ public class GameScreen extends ScreenBase implements Screen{
 	
 	public void update() {
 		game.player.setStateTime(game.player.getStateTime() + Gdx.graphics.getDeltaTime());
+		int blood_width = (int)((game.player.character.getHp()/100)*24.6);
+		game.batch.draw(Assets.blood, 82, 487, blood_width, 17);
 		game.batch.draw(Assets.blood_tunk, 30, 475);
+		
 		if((game.player.character.getHp() <= 0 || game.player.character.getPosition().y <= -200) && !isDead){
 			isDead = true;
 			game.player.character.getPosition().y = -300;

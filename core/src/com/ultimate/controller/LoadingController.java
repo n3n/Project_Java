@@ -21,7 +21,7 @@ public class LoadingController extends GameController{
 		Assets.load();
 		game.setScreen(new MainMenuScreen(game));
 		game.sound_bg = Assets.loadSound("sound/BGM_MENU.mp3");
-		game.sound_bg.loop(0.5f);
+		game.sound_bg.loop(0.8f);
 	}
 
 }

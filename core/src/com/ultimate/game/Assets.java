@@ -25,6 +25,7 @@ public class Assets {
 	public static Animation2 luffyAtkHeavy;
 	public static Animation2 luffyForwardAtk;
 	public static Animation2 luffyHurt;
+	public static Animation2 luffyDead;
 	
 	public static Animation2 aceStand;
 	public static Animation2 aceRun;
@@ -180,6 +181,19 @@ public class Assets {
 				loadSprite("sprites/luffy/luffy_hurt_10.png"),
 				loadSprite("sprites/luffy/luffy_hurt_11.png")
 				);
+		luffyDead =  new Animation2(0.1f, 
+				loadSprite("sprites/luffy/luffy_hurt_1.png"),
+				loadSprite("sprites/luffy/luffy_hurt_2.png"),
+				loadSprite("sprites/luffy/luffy_hurt_3.png"),
+				loadSprite("sprites/luffy/luffy_hurt_4.png"),
+				loadSprite("sprites/luffy/luffy_hurt_5.png"),
+				loadSprite("sprites/luffy/luffy_hurt_6.png"),
+				loadSprite("sprites/luffy/luffy_hurt_7.png"),
+				loadSprite("sprites/luffy/luffy_hurt_8.png"),
+				loadSprite("sprites/luffy/luffy_hurt_9.png"),
+				loadSprite("sprites/luffy/luffy_hurt_10.png"),
+				loadSprite("sprites/luffy/luffy_hurt_11.png")
+				);
 	}
 	
 	private static void loadAce(){
@@ -262,7 +276,7 @@ public class Assets {
 		bg_mainMenu = loadTexture("dark-wood_158357.jpg");
 		map_1 = loadTexture("maps/test_map_1.png");
 		blood = loadTexture("Materials/blood.png");
-		blood_tunk = loadTexture("Materials/bloodtunk.png");
+		blood_tunk = loadTexture("Materials/blood_luffy.png");
 		bg = loadTexture("Materials/bg.png");
 		multiplayer = loadTexture("Materials/multiplayer.png");
 		multiplayer_onclick = loadTexture("Materials/multiplayer_onclick.png");
@@ -283,7 +297,7 @@ public class Assets {
 		join_onclick = loadTexture("Materials/join_onclick.png");
 		back  = loadTexture("Materials/back.png");
 		back_onclick = loadTexture("Materials/back_onclick.png");
-		battleselect = loadTexture("Materials/battleselect.png");
+		battleselect = loadTexture("Materials/Map_Select.png");
 		left = loadTexture("Materials/left.png");
 		left_onclick = loadTexture("Materials/left_onclick.png");
 		right = loadTexture("Materials/right.png");
@@ -302,9 +316,10 @@ public class Assets {
 		state_saintseiya = loadTexture("Materials/saintseiya_stage.png");
 		play = loadTexture("Materials/play.png");
 		play_onclick = loadTexture("Materials/play_onclick.png");
-		entername = loadTexture("Materials/entername.png");
+		entername = loadTexture("Materials/Enter_name.png");
 		nametag = loadTexture("Materials/nametag.png");
-		ipaddress = loadTexture("Materials/ipaddress.png");
+		ipaddress = loadTexture("Materials/IP_Address.png");
+//		howtoplay_bg = loadTexture("Materials/How_to_play.png");
 		click = loadSound("sound/029.mp3");
 		atk = loadSound("sound/01_Luffy_B_audio.mp3");
 		atk2 = loadSound("sound/014.mp3");

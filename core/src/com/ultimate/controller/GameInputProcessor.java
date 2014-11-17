@@ -33,18 +33,15 @@ public class GameInputProcessor {
 				game.player.character.setAction(false);
 			}
 			if(Gdx.input.isKeyJustPressed(Keys.J)){
-				System.out.println("J");
 				atk1();
 			}
 			else if(Gdx.input.isKeyPressed(Keys.SPACE)){
 				jump();
 			}
 			else if(Gdx.input.isKeyPressed(Keys.A) ){
-				System.out.println("A");
 				moveLeft();
 			}
 			else if(Gdx.input.isKeyPressed(Keys.D) ){
-				System.out.println("D");
 				moveRight();
 			}
 			if( (!game.player.character.isAction() && !collision()) ){
