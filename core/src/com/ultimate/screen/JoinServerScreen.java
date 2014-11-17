@@ -16,16 +16,16 @@ public class JoinServerScreen extends ScreenBase {
 	public Rectangle boundBack;
 	public int width = Gdx.graphics.getWidth()/2;
 	public BitmapFont loading = genFont();
-	
+
 	public JoinServerScreen(UltimateFight game){
 		this.game = game;
 		game.server = null;
 		game.client = null;
-		controller = new JoinServerController(game, this);
 		boundJoin = new Rectangle(width-(Assets.join.getWidth()/2), (Gdx.graphics.getHeight())-(Gdx.graphics.getHeight()-380)-89, 220, 89);
 		boundBack = new Rectangle(30, (Gdx.graphics.getHeight()-30)-58, 68, 58);
+		controller = new JoinServerController(game, this);
 	}
-	
+
 	public void render(float delta) {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
