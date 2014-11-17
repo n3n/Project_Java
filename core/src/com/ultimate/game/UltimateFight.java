@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.ultimate.network.GameClient;
 import com.ultimate.network.GameServer;
 import com.ultimate.network.GameWorld;
-import com.ultimate.screen.MainMenuScreen;
+import com.ultimate.screen.LoadingScreen;
 
 public class UltimateFight extends Game implements ApplicationListener {
 	
@@ -16,7 +16,7 @@ public class UltimateFight extends Game implements ApplicationListener {
 	public GameServer server;
 	public GameClient client;
 	public GameWorld world;
-	private Sound sound_bg;
+	public Sound sound_bg;
 	
 	public Sound getSound_bg() {
 		return sound_bg;
@@ -29,10 +29,9 @@ public class UltimateFight extends Game implements ApplicationListener {
 	public void create() {
 		batch = new SpriteBatch();
 		player = new Player();
-		Assets.load();
-		sound_bg = Assets.loadSound("sound/BGM_MENU.mp3");
-		sound_bg.loop(0.5f);
-		this.setScreen(new MainMenuScreen(this));
+//		Assets.load();
+		
+		this.setScreen(new LoadingScreen(this));
 	}
 
 	public void render() {
