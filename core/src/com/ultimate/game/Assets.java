@@ -1,6 +1,5 @@
 package com.ultimate.game;
 
-import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
@@ -87,6 +86,7 @@ public class Assets {
 	public static Sound click;
 	public static Sound atk;
 	public static Sound atk2;
+	public static Texture bg_loading;
 	
 	public static void load(){
 		loadVegeta();
@@ -308,9 +308,11 @@ public class Assets {
 		click = loadSound("sound/029.mp3");
 		atk = loadSound("sound/01_Luffy_B_audio.mp3");
 		atk2 = loadSound("sound/014.mp3");
+		
 	}
 	
 	public static Sound loadSound(String file){
+		Gdx.app.log("Load", "Sound: assets" + file);
 		return Gdx.audio.newSound(Gdx.files.internal(file));
 	}
 	
