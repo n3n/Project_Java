@@ -29,8 +29,6 @@ public class UltimateFight extends Game implements ApplicationListener {
 	public void create() {
 		batch = new SpriteBatch();
 		player = new Player();
-//		Assets.load();
-		
 		this.setScreen(new LoadingScreen(this));
 	}
 

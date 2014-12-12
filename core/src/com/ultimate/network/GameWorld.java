@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.TreeMap;
 
-import com.sun.xml.internal.org.jvnet.fastinfoset.ExternalVocabulary;
+import com.badlogic.gdx.Gdx;
 import com.ultimate.controller.WorldRenderer;
 import com.ultimate.game.Player;
 import com.ultimate.game.UltimateFight;
-import com.ultimate.unit.JobClass;
 import com.ultimate.unit.Map;
 import com.ultimate.unit.Skill;
 
@@ -17,8 +16,19 @@ public class GameWorld {
 	private TreeMap<Integer, Skill> objects;
 	public UltimateFight game;
 	public WorldRenderer renderer;
-	public Map map;
+	public int map_id;
+	private Map map;
+	private boolean isEnd = false;
+	public boolean isEnd() {
+		return isEnd;
+	}
+
+	public void setEnd(boolean isEnd) {
+		this.isEnd = isEnd;
+	}
+
 	private int skillID = 1;
+	private int time = 0;
 	
 	public GameWorld(UltimateFight game){
 		players = new TreeMap<Integer, Player>();
@@ -30,47 +40,68 @@ public class GameWorld {
 	public void addPlayer(int id, Player player){
 		
 		try{
-			
 			Player temp = players.get(id);
 			if(game.server != null){
-//				System.out.printf("Server: Player: %s, HP: %s\n",player.getPlayerID(), player.character.getHp());
-//				System.out.printf("Server: Temp: %s, HP: %s\n",player.getPlayerID(), player.character.getHp());
-			}else{
-//				System.out.printf("Client: Player: %s, HP: %s\n",player.getPlayerID(), player.character.getHp());
-//				System.out.printf("Client: Temp: %s, HP: %s\n",player.getPlayerID(), player.character.getHp());
-//				System.out.printf("Client: Player: %s, HP: %s | Temp: %s\n",player.getPlayerID(), player.character.getHp(), temp.character.getHp());
-			}
-			if(game.server != null){
-				players.put(id, player);
-			}
-			else{
-				System.out.printf("C|P:%s-HP:%s | T: %s\n",player.getPlayerID(), player.character.getHp(), temp.character.getHp());
-				if(player.character.getHp() < temp.character.getHp()){
-					System.out.println("##########################################################################################");
+				if( (player.getHP() < temp.getHP()) || (temp.getHP() <= 0 && player.getHP() == 1000) ){
+					players.put(id, player);
+				}else{
 					players.put(id, player);
 				}
-				else if(player.getPlayerID() == game.player.getPlayerID() && player.character.getHp() != 0){
-					game.player.character.setHp(player.character.getHp());
+			}
+			else{
+				
+				if(player.character.getHp() < temp.character.getHp()){
+					game.player.setKill(player.getKill());
+					game.player.setDead(player.getDead());
 					players.put(id, player);
-					System.out.println("HP: "+player.character.getHp());
+				}
+				else if(player.getPlayerID() == game.player.getPlayerID()){
+					if(player.character.getHp() < game.player.character.getHp()){
+						game.player.character.setHp(player.character.getHp());
+						game.player.setKill(player.getKill());
+						game.player.setDead(player.getDead());
+						players.put(id, player);
+//						System.out.println("You are under attack! | HP: " + game.player.character.getHp());
+					}
+					else if(player.character.getHp() >= 0){
+						game.player.setKill(player.getKill());
+						game.player.setDead(player.getDead());
+						players.put(id, player);
+					}
+					else{
+						System.out.println("...");
+					}
 				}else{
+//					System.out.println("ELSE");
 					players.put(id, player);
 				}
 			}
 			
 		}catch(Exception e){
 			if(game.server != null){
-				System.out.printf("Put: Player: %s, HP: %s\n",player.getPlayerID(), player.character.getHp());
 				players.put(id, player);
 			}
-			e.printStackTrace();
 			players.put(id, player);
 		}
 		
 	}
 	
-	public void setMap(Map map){
+	public void setMapID(int map){
+		this.map_id = map;
+		this.map = Map.object_id[map];
+//		System.out.println("Map: " + this.map);
+	}
+	
+	public Map getMap() {
+		return map;
+	}
+
+	public void setMap(Map map) {
 		this.map = map;
+	}
+
+	public int getMapID(){
+		return map_id;
 	}
 	
 	public TreeMap<Integer, Player> getPlayersMap(){
@@ -78,7 +109,19 @@ public class GameWorld {
 	}
 	
 	public void removePlayer(int id){
-		players.remove(id);
+		try{
+			if(!players.containsKey(id)) return; 
+			
+			if(game.server != null){
+				DisconnectPacket packet = new DisconnectPacket();
+				packet.setID(id);
+				game.server.sendToAllConnention(packet);
+				Gdx.app.log("Disconnect", players.get(id).getName()+" has left the game");
+				players.remove(id);
+				Gdx.app.log("Disconnect", "Success");
+			}
+			
+		}catch(Exception e){}
 	}
 	
 	public Iterator<Player> getPlayers(){
@@ -96,9 +139,6 @@ public class GameWorld {
 		Iterator<Player> iterPlayers = getPlayers();
 		while(iterPlayers.hasNext()){
 			Player eachPlayer = (Player)iterPlayers.next();
-			if(eachPlayer.character.getHp() <= 0){
-//				getPlayersMap().get(eachPlayer.getPlayerID()).character.setSTATE(JobClass.STATE_DEAD);
-			}
 			if(eachPlayer.getPlayerID() != player.getPlayerID() && eachPlayer.character.getBounds().overlaps(player.character.getBounds())){
 				return true;
 			}
@@ -112,7 +152,6 @@ public class GameWorld {
 	}
 
 	public void removeObject(int id){
-//		System.out.println("Remove");
 		objects.remove(id);
 	}
 
@@ -125,5 +164,13 @@ public class GameWorld {
 	
 	public TreeMap<Integer, Skill> getObjectMap(){
 		return objects;
+	}
+
+	public void setTime(int time) {
+		this.time = time;
+	}
+	
+	public int getTime(){
+		return time;
 	}
 }

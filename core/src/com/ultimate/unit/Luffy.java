@@ -1,14 +1,11 @@
 package com.ultimate.unit;
 
-import com.ultimate.game.Assets;
 import com.ultimate.game.UltimateFight;
-import com.ultimate.screen.GameScreen;
 
 public class Luffy extends JobClass {
 
 	public static int WIDTH = 50;
 	public static int HEIGHT = 50;
-	public static final int timeForwardAtk = 210;
 
 	public Luffy() {
 		super(60, 60, WIDTH, HEIGHT);
@@ -23,8 +20,8 @@ public class Luffy extends JobClass {
 		setType(2);
 		setSTATE(JobClass.STATE_STAND);
 	}
-	
-	public void atk1(final UltimateFight game){
+
+	public void atk1(final UltimateFight game){ //j
 		new Thread(new Runnable() {
 			public void run() {
 				game.player.setStateTime(0);
@@ -33,15 +30,15 @@ public class Luffy extends JobClass {
 					Skill object = new Skill();
 					object.setPlayer_id(game.player.getPlayerID());
 					object.setType(Skill.TYPE_ATK);
-					if(!game.player.character.isRight()){
-						object.setPosition(game.player.character.getPosition().x-20, game.player.character.getPosition().y);
-						object.setBounds(game.player.character.getPosition().x, game.player.character.getPosition().y, 20, 70);
+					if(!game.player.character.isRight()){ // Left side
+						object.setPosition(game.player.character.getPosition().x, game.player.character.getPosition().y);
+						object.setBounds(object.getPosition().x, object.getPosition().y, 20, 70);
 						object.setTurn(-1);
 					}
-					else{
-						object.setPosition(game.player.character.getPosition().x-20, game.player.character.getPosition().y);
-						object.setBounds(game.player.character.getPosition().x, game.player.character.getPosition().y, 20, 70);
-						object.setTurn(-1);
+					else{ // Right side
+						object.setPosition(game.player.character.getPosition().x, game.player.character.getPosition().y);
+						object.setBounds(object.getPosition().x, object.getPosition().y, 70, 70);
+						object.setTurn(1);
 					}
 					if(game.server != null){
 						game.world.addObject(object);
@@ -58,21 +55,21 @@ public class Luffy extends JobClass {
 			}
 		}).start();
 	}
-	
-	public void atk2(final UltimateFight game){
+
+	public void atk2(final UltimateFight game){ //K
 		new Thread(new Runnable() {
 			public void run() {
 				try {
-					
-					if(!game.player.character.isRight()){
-						
+
+					if(!game.player.character.isRight()){ // Left side
+
 						game.player.setStateTime(0f);
 						Thread.sleep(300);
-						
+
 						game.player.character.moveLeft(110);
 						Skill object = new Skill();
-						object.setPosition(game.player.character.getPosition().x-30, game.player.character.getPosition().y);
-						object.setBounds(game.player.character.getPosition().x, game.player.character.getPosition().y, 140, 70);
+						object.setPosition(game.player.character.getPosition().x, game.player.character.getPosition().y);
+						object.setBounds(object.getPosition().x, object.getPosition().y, 120, 70);
 						object.setPlayer_id(game.player.getPlayerID());
 						object.setType(Skill.TYPE_FORWARD_ATK);
 						object.setTurn(-1);
@@ -85,12 +82,12 @@ public class Luffy extends JobClass {
 						Thread.sleep(150);
 						game.player.character.moveRight(110);
 					}
-					else{
+					else{ // Right
 						game.player.setStateTime(0);
 						Thread.sleep(300);
 						Skill object = new Skill();
-						object.setPosition(game.player.character.getPosition().x+140, game.player.character.getPosition().y);
-						object.setBounds(game.player.character.getPosition().x, game.player.character.getPosition().y, 140, 70);
+						object.setPosition(game.player.character.getPosition().x, game.player.character.getPosition().y);
+						object.setBounds(object.getPosition().x, object.getPosition().y, 150, 70);
 						object.setPlayer_id(game.player.getPlayerID());
 						object.setType(Skill.TYPE_FORWARD_ATK);
 						object.setTurn(1);
@@ -105,7 +102,7 @@ public class Luffy extends JobClass {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				
+
 				game.player.character.setSTATE(JobClass.STATE_STAND);
 				game.player.character.setAction(false);
 			}
@@ -118,12 +115,12 @@ public class Luffy extends JobClass {
 	@Override
 	public void atk4(UltimateFight game) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void block(UltimateFight game) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

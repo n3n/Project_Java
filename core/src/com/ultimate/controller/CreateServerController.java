@@ -5,20 +5,25 @@ import com.badlogic.gdx.math.Rectangle;
 import com.ultimate.game.Assets;
 import com.ultimate.game.UltimateFight;
 import com.ultimate.network.GameServer;
+import com.ultimate.network.GameWorld;
 import com.ultimate.screen.CreateServerScreen;
 import com.ultimate.screen.EnterNameScreen;
 import com.ultimate.screen.MultiplayerMenuScreen;
+import com.ultimate.unit.Map;
 
 public class CreateServerController extends GameController {
 
 	UltimateFight game;
 	CreateServerScreen screen;
+	int id = 1;
 	
 	public CreateServerController(UltimateFight game, CreateServerScreen screen){
 		this.game = game;
 		this.screen = screen;
 		pointer = new Rectangle();
 		pointer.setSize(2, 2);
+		game.world = new GameWorld(game);
+		game.world.addPlayer(game.player.getPlayerID(), game.player);
 	}
 	
 	public void update() {
@@ -38,6 +43,8 @@ public class CreateServerController extends GameController {
 			game.batch.draw(Assets.left_onclick, ((Gdx.graphics.getWidth()/2)/2)-60, (Gdx.graphics.getHeight()/2)-15);
 			if(Gdx.input.isButtonPressed(0)){
 				try {Thread.sleep(100);} catch (InterruptedException e) {}
+				id = (id+(-1))%6;
+				id = Math.abs(id);
 				Assets.click.play();
 			}
 		}
@@ -46,10 +53,11 @@ public class CreateServerController extends GameController {
 			if(Gdx.input.isButtonPressed(0)){
 				try {Thread.sleep(100);} catch (InterruptedException e) {}
 				Assets.click.play();
+				id = Math.abs((id+(1))%6);
 			}
 		}
 		else if(screen.boundBack.overlaps(pointer)){
-			game.batch.draw(Assets.back_onclick, 30, 30);
+			game.batch.draw(Assets.back_onclick, 30, 30); 
 			if(Gdx.input.isButtonPressed(0)){
 				Assets.click.play();
 				screen.dispose();
@@ -57,15 +65,13 @@ public class CreateServerController extends GameController {
 				game.setScreen(new MultiplayerMenuScreen(game));
 			}
 		}
-		
-//		if(Gdx.input.isKeyPressed(Keys.M)){
-//			game.server = new GameServer(game);
-//			game.setScreen(new GameScreen(game));
-//			System.out.println("Start Server");
-//		}
-//		else if(Gdx.input.isKeyPressed(Keys.A)){
-//			game.player.setJob(new Ace());
-//		}
+		swapMap();
+	}
+	
+	public void swapMap(){
+		game.world.setMapID(id);
+		game.batch.draw(Map.map_id[id], (Gdx.graphics.getWidth()/2)-(340/2), (Gdx.graphics.getHeight()/2)-70, 340, 220);
+		game.batch.draw(Map.stage_id[id], (Gdx.graphics.getWidth()/2)-(Map.stage_id[id].getWidth()/2), (Gdx.graphics.getHeight()/2)-140);
 	}
 
 }

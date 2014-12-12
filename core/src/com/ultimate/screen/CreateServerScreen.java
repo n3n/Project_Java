@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Rectangle;
 import com.ultimate.controller.CreateServerController;
-import com.ultimate.controller.KeyInputProcessor;
 import com.ultimate.game.Assets;
 import com.ultimate.game.UltimateFight;
 
@@ -41,8 +40,6 @@ public class CreateServerScreen extends ScreenBase {
 		game.batch.draw(Assets.bg, 0, 0);
 		game.batch.draw(Assets.battleselect, (Gdx.graphics.getWidth()/2)-(Assets.battleselect.getWidth()/2), Gdx.graphics.getHeight()-100);
 		game.batch.draw(Assets.left, ((Gdx.graphics.getWidth()/2)/2)-60, (Gdx.graphics.getHeight()/2)-15);
-		game.batch.draw(Assets.map_saintseiya, (Gdx.graphics.getWidth()/2)-(340/2), (Gdx.graphics.getHeight()/2)-70, 340, 220);
-		game.batch.draw(Assets.state_saintseiya, (Gdx.graphics.getWidth()/2)-(330/2), (Gdx.graphics.getHeight()/2)-140);
 		game.batch.draw(Assets.create, (Gdx.graphics.getWidth()/2)-(215/2), (Gdx.graphics.getHeight()/2)-215, 220, 65);
 		game.batch.draw(Assets.right, (Gdx.graphics.getWidth()/2)+200, (Gdx.graphics.getHeight()/2)-15);
 		game.batch.draw(Assets.back, 30, 30);

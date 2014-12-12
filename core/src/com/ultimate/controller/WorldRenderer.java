@@ -6,7 +6,6 @@ import com.ultimate.game.Animation2;
 import com.ultimate.game.Assets;
 import com.ultimate.game.Player;
 import com.ultimate.game.UltimateFight;
-import com.ultimate.screen.GameScreen;
 import com.ultimate.unit.JobClass;
 
 public class WorldRenderer {
@@ -56,13 +55,17 @@ public class WorldRenderer {
 						keyFrame = Assets.luffyForwardAtk.getKeyFrame(player.getStateTime() , Animation2.ANIMATION_LOOPING);
 						break;
 					case JobClass.STATE_HURT:
-						keyFrame = Assets.luffyHurt.getKeyFrame(player.getStateTime() , Animation2.ANIMATION_LOOPING);
+						keyFrame = Assets.luffyHurt.getKeyFrame(player.getStateTime() , Animation2.ANIMATION_NONLOOPING);
+						break;
+					case JobClass.STATE_DEAD:
+						keyFrame = Assets.luffyDead.getKeyFrame(player.getStateTime() , Animation2.ANIMATION_NONLOOPING);
 						break;
 				}
 				break;
 			case 3: // Ace
 				switch (player.character.getSTATE()) {
 					case JobClass.STATE_RUN:
+						System.out.println(player.getStateTime());
 						keyFrame = Assets.aceRun.getKeyFrame(player.getStateTime() , Animation2.ANIMATION_LOOPING);
 						break;
 					case JobClass.STATE_ATK1:
@@ -81,7 +84,10 @@ public class WorldRenderer {
 						keyFrame = Assets.aceForwardAtk.getKeyFrame(player.getStateTime() , Animation2.ANIMATION_LOOPING);
 						break;
 					case JobClass.STATE_HURT:
-						keyFrame = Assets.luffyForwardAtk.getKeyFrame(player.getStateTime() , Animation2.ANIMATION_LOOPING);
+						keyFrame = Assets.aceHurt.getKeyFrame(player.getStateTime() , Animation2.ANIMATION_NONLOOPING);
+						break;
+					case JobClass.STATE_DEAD:
+						keyFrame = Assets.aceDead.getKeyFrame(player.getStateTime() , Animation2.ANIMATION_NONLOOPING);
 						break;
 				}
 				break;

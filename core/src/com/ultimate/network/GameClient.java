@@ -2,7 +2,6 @@ package com.ultimate.network;
 
 import java.io.IOException;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.esotericsoftware.kryonet.Client;
@@ -10,7 +9,6 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.ultimate.game.Player;
 import com.ultimate.game.UltimateFight;
-import com.ultimate.screen.GameScreen;
 import com.ultimate.unit.Ace;
 import com.ultimate.unit.GameObject;
 import com.ultimate.unit.JobClass;
@@ -28,6 +26,7 @@ public class GameClient {
 	private int port = 52227;
 	UltimateFight game;
 	private String ipAddress = "";
+	private boolean hasGet = false;
 	public GameClient(final UltimateFight game){
 		
 		this.game = game;
@@ -47,15 +46,10 @@ public class GameClient {
 		
 		game.world.addPlayer(game.player.getPlayerID(), game.player);
 		
-
-		
-
-//		try {
-//			client.sendUDP(game.player);
-//			System.out.println("Send!");
-//		} catch (Exception e) {
-//			System.out.println("Can't connected");
-//		}
+	}
+	
+	public Client getClient(){
+		return client;
 	}
 	
 	public void tryConnect() throws IOException{
@@ -87,11 +81,27 @@ public class GameClient {
 			public void received (Connection connection, Object data) {
 				if(data instanceof Player) {
 					Player player = (Player)data;
-//					System.out.println("Player: ("+player.character.getPosition().x+", "+player.character.getPosition().y+")");
 					game.world.addPlayer(player.getPlayerID(), player);
+				}
+				if(data instanceof DisconnectPacket){
+					DisconnectPacket packet = (DisconnectPacket)data;
+					game.world.removePlayer(packet.getID());
+				}
+				if(data instanceof MapPacket){
+					MapPacket packet = (MapPacket)data;
+					game.world.setMapID(packet.getId());
+					hasGet = true;
+				}
+				if(data instanceof cntTimePacket){
+					cntTimePacket packet = (cntTimePacket)data;
+					game.world.setTime(packet.getTime());
 				}
 			}
 		});
+	}
+	
+	public boolean hasGetMap(){
+		return hasGet;
 	}
 	
 	private void registerKryonet(){
@@ -104,5 +114,8 @@ public class GameClient {
 		client.getKryo().register(Vector2.class);
 		client.getKryo().register(Rectangle.class);
 		client.getKryo().register(Skill.class);
+		client.getKryo().register(DisconnectPacket.class);
+		client.getKryo().register(MapPacket.class);
+		client.getKryo().register(cntTimePacket.class);
 	}
 }

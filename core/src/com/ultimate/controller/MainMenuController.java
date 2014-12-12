@@ -1,10 +1,10 @@
 package com.ultimate.controller;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Rectangle;
 import com.ultimate.game.Assets;
 import com.ultimate.game.UltimateFight;
+import com.ultimate.screen.CreditScreen;
 import com.ultimate.screen.HowToPlayScreen;
 import com.ultimate.screen.MainMenuScreen;
 import com.ultimate.screen.MultiplayerMenuScreen;
@@ -24,7 +24,6 @@ public class MainMenuController extends GameController {
 	public void update(){
 		pointer.setPosition(Gdx.input.getX(), Gdx.input.getY());
 		
-//		System.out.println(pointer.x + ", " + pointer.y);
 		
 		if(screen.boundMultiplayer.overlaps(pointer)){
 			game.batch.draw(Assets.multiplayer_onclick, screen.x, screen.y);
@@ -50,7 +49,7 @@ public class MainMenuController extends GameController {
 				Assets.click.play();
 				Gdx.app.log("Screen", "To Credit screen");
 				screen.dispose();
-//				game.setScreen(new CreditScreen(game));
+				game.setScreen(new CreditScreen(game));
 			}
 		}
 		else if(screen.boundExit.overlaps(pointer)){

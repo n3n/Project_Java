@@ -10,7 +10,6 @@ import com.ultimate.game.UltimateFight;
 import com.ultimate.unit.Box;
 import com.ultimate.unit.JobClass;
 import com.ultimate.unit.Map;
-import com.ultimate.unit.Map_1;
 
 public class GameInputProcessor {
 
@@ -19,7 +18,7 @@ public class GameInputProcessor {
 	
 	public GameInputProcessor(UltimateFight game){
 		this.game = game;
-		map = new Map_1();
+		this.map = game.world.getMap();
 	}
 
 	public void update(){
@@ -27,6 +26,10 @@ public class GameInputProcessor {
 	}
 
 	public void processor(){
+		if(Gdx.input.isKeyJustPressed(Keys.ESCAPE)){
+			game.world.setEnd(true);
+			return;
+		}
 		if(game.player.character.getSTATE() != JobClass.STATE_DEAD){
 			if(!game.player.character.isAction()){
 				game.player.character.setSTATE(JobClass.STATE_STAND);
@@ -34,6 +37,9 @@ public class GameInputProcessor {
 			}
 			if(Gdx.input.isKeyJustPressed(Keys.J)){
 				atk1();
+			}
+			else if(Gdx.input.isKeyJustPressed(Keys.K)){
+				atkForward();
 			}
 			else if(Gdx.input.isKeyPressed(Keys.SPACE)){
 				jump();
@@ -59,7 +65,7 @@ public class GameInputProcessor {
 	
 	static boolean collision(){
 		try{
-			Iterator<Box> objects = map.getObject().iterator();
+			Iterator<Box> objects = game.world.getMap().getObject().iterator();
 			while(objects.hasNext()){
 				Box object = (Box) objects.next();
 				if(object.getBounds().overlaps(game.player.character.getBounds())){

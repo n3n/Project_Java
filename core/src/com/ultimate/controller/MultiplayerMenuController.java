@@ -1,13 +1,10 @@
 package com.ultimate.controller;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Rectangle;
 import com.ultimate.game.Assets;
 import com.ultimate.game.UltimateFight;
-import com.ultimate.network.GameClient;
 import com.ultimate.screen.CreateServerScreen;
-import com.ultimate.screen.GameScreen;
 import com.ultimate.screen.JoinServerScreen;
 import com.ultimate.screen.MainMenuScreen;
 import com.ultimate.screen.MultiplayerMenuScreen;
@@ -52,7 +49,7 @@ public class MultiplayerMenuController extends GameController {
 				Assets.click.play();
 				screen.dispose();
 				Gdx.app.log("Screen", "To Mainmenu screen");
-				try {Thread.sleep(100);} catch (InterruptedException e) {}
+				try {Thread.sleep(70);} catch (InterruptedException e) {}
 				game.setScreen(new MainMenuScreen(game));
 			}
 		}

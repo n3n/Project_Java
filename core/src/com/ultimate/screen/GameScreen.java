@@ -8,16 +8,17 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.ultimate.controller.GameCheckCollision;
+import com.badlogic.gdx.math.Vector2;
 import com.ultimate.controller.GameInputProcessor;
 import com.ultimate.controller.ServerProcessing;
 import com.ultimate.game.Assets;
 import com.ultimate.game.Player;
 import com.ultimate.game.UltimateFight;
+import com.ultimate.network.DisconnectPacket;
 import com.ultimate.unit.Ace;
 import com.ultimate.unit.JobClass;
 import com.ultimate.unit.Luffy;
+import com.ultimate.unit.Map;
 
 public class GameScreen extends ScreenBase implements Screen{
 	
@@ -33,6 +34,7 @@ public class GameScreen extends ScreenBase implements Screen{
 			serverProcess = new ServerProcessing(game);
 		}
 		setFont(2);
+		game.player.setJob(randomSpawn());
 		game.player.setInGame(true);
 		font.setColor(1f, 1f, 1f, 1f);
 	}
@@ -42,11 +44,13 @@ public class GameScreen extends ScreenBase implements Screen{
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		game.batch.begin();
 		inputProcess.update();
-		game.batch.draw(Assets.map_1, 0, 0);
+		game.batch.draw(Map.map_id[game.world.getMapID()], 0, 0);
 		
 		
 		if(Gdx.input.isKeyJustPressed(Keys.Z)){
-			game.player.setJob(new Luffy());
+			game.player.setJob(randomSpawn());
+		}else if(Gdx.input.isKeyJustPressed(Keys.X)){
+			game.player.character.getDmg();
 		}
 		
 		try{
@@ -67,24 +71,43 @@ public class GameScreen extends ScreenBase implements Screen{
 		game.batch.end();
 		
 		Framerate.run();
+		if(game.world.isEnd()){
+			this.dispose();
+			game.setScreen(new MainMenuScreen(game));
+		}
 	}
 	
 	public void update() {
 		game.player.setStateTime(game.player.getStateTime() + Gdx.graphics.getDeltaTime());
+		
 		int blood_width = (int)((game.player.character.getHp()/100)*24.6);
+		
 		game.batch.draw(Assets.blood, 82, 487, blood_width, 17);
-		game.batch.draw(Assets.blood_tunk, 30, 475);
+		if(game.player.character instanceof Luffy)game.batch.draw(Assets.blood_luffy, 30, 475);
+		else if(game.player.character instanceof Ace)game.batch.draw(Assets.blood_ace, 30, 475);
+		
 		
 		if((game.player.character.getHp() <= 0 || game.player.character.getPosition().y <= -200) && !isDead){
 			isDead = true;
-			game.player.character.getPosition().y = -300;
+			game.player.character.setHp(0);
 			new Thread(new Runnable() {
 				public void run() {
-					for(int i=0;i<3;i++) try {Thread.sleep(1000);} catch (InterruptedException e) {}
-					game.player.setJob(randomSpawn());
-					if(game.server != null) game.server.sendToAllConnention(game.player);
-					else game.client.sendData(game.player);
-					isDead = false;
+					game.player.character.setSTATE(JobClass.STATE_DEAD);
+					if(true){
+						new Thread(){
+							public void run(){
+								for(int i=0;i<60;i++) {
+									try {Thread.sleep(50);} catch (InterruptedException e) {}
+									game.player.character.setSTATE(JobClass.STATE_DEAD);
+								}
+								game.player.character.setSTATE(JobClass.STATE_DEAD);
+								game.player.setJob(randomSpawn());
+								if(game.server != null) game.server.sendToAllConnention(game.player);
+								else game.client.sendData(game.player);
+								isDead = false;
+							}
+						}.start();
+					}
 				}
 			}).start();
 		}
@@ -92,10 +115,29 @@ public class GameScreen extends ScreenBase implements Screen{
 	
 	public JobClass randomSpawn(){
 		isDead = false;
-		switch (1+(int)(Math.random()*2)) {
-		case 1: return new Luffy();
-		default: return new Luffy();
+		JobClass character;
+		int num = 1+(int)(Math.random()*2);
+		System.out.println(num);
+		switch (num) {
+			case 1: 
+				character = new Luffy();
+				break;
+			case 2: 
+				character = new Ace();
+				break;
+			default: 
+				character = new Luffy();
+				break;
 		}
+		Vector2 pos = randomPos();
+		character.setPosition(pos.x, pos.y);
+		return character;
+	}
+	
+	public Vector2 randomPos(){
+		int length = game.world.getMap().getSpawnPos().length;
+		int randomVal = (int)(Math.random()*length-1);
+		return game.world.getMap().getSpawnPos()[randomVal];
 	}
 
 	@Override
@@ -116,22 +158,28 @@ public class GameScreen extends ScreenBase implements Screen{
 		
 	}
 
-	@Override
 	public void pause() {
-		// TODO Auto-generated method stub
-		
 	}
 
-	@Override
 	public void resume() {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
-		
+		if(game.client != null){
+			DisconnectPacket packet = new DisconnectPacket();
+			packet.setID(game.player.getPlayerID());
+			game.client.sendData(packet);
+		}else if(game.server != null){
+			game.server.getServer().stop();
+			game.server = null;
+			inputProcess = null;
+			serverProcess = null;
+			name = null;
+			game.world = null;
+			game.player.character = null;
+		}
 	}
 
 }

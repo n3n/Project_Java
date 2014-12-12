@@ -21,7 +21,6 @@ public class EnterNameController extends GameController{
 		game.player.setInGame(false);
 		inputProcess = new KeyInputProcessor();
 		Gdx.input.setInputProcessor(inputProcess);
-		
 	}
 	
 	

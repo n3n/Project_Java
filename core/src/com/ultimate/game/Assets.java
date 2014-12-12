@@ -36,11 +36,13 @@ public class Assets {
 	public static Animation2 aceAtkHeavy;
 	public static Animation2 aceForwardAtk;
 	public static Animation2 aceHurt;
+	public static Animation2 aceDead;
 	
 	public static Texture bg_mainMenu;
 	public static Texture map_1;
 	public static Texture blood;
-	public static Texture blood_tunk;
+	public static Texture blood_luffy;
+	public static Texture blood_ace;
 	public static Texture bg;
 	public static Texture multiplayer;
 	public static Texture multiplayer_onclick;
@@ -75,19 +77,21 @@ public class Assets {
 	public static Texture map_jojo;
 	public static Texture map_naruto;
 	public static Texture map_saintseiya;
-	public static Texture state_deathnote;
-	public static Texture state_naruto;
-	public static Texture state_alale;
-	public static Texture state_dragonball;
-	public static Texture state_jojo;
-	public static Texture state_saintseiya;
+	public static Texture stage_deathnote;
+	public static Texture stage_naruto;
+	public static Texture stage_alale;
+	public static Texture stage_dragonball;
+	public static Texture stage_jojo;
+	public static Texture stage_saintseiya;
 	public static Texture nametag;
 	public static Texture ipaddress;
+	public static Texture howtoplay_bg;
 	
 	public static Sound click;
 	public static Sound atk;
 	public static Sound atk2;
 	public static Texture bg_loading;
+	public static Texture credit_bg;
 	
 	public static void load(){
 		loadVegeta();
@@ -131,12 +135,12 @@ public class Assets {
 		luffyStand =  new Animation2(0.2f, 
 				loadSprite("sprites/luffy/Luffy_Stand_1.png")
 				);
-		luffyAtk =  new Animation2(0.075f, 
-				loadSprite("sprites/luffy/Luffy_Up+B_1.png"),
-				loadSprite("sprites/luffy/Luffy_Up+B_2.png"),
-				loadSprite("sprites/luffy/Luffy_Up+B_3.png"),
-				loadSprite("sprites/luffy/Luffy_Up+B_4.png"),
-				loadSprite("sprites/luffy/Luffy_Up+B_5.png")
+		luffyAtk =  new Animation2(0.1f, 
+				loadSprite("sprites/luffy/Luffy_Up_B_1.png"),
+				loadSprite("sprites/luffy/Luffy_Up_B_2.png"),
+				loadSprite("sprites/luffy/Luffy_Up_B_3.png"),
+				loadSprite("sprites/luffy/Luffy_Up_B_4.png"),
+				loadSprite("sprites/luffy/Luffy_Up_B_5.png")
 				);
 		luffyRun = new Animation2(0.2f, 
 				loadSprite("sprites/luffy/Luffy_Run_1.png"),
@@ -149,14 +153,14 @@ public class Assets {
 				loadSprite("sprites/luffy/Luffy_Guard_3.png")
 				);
 		luffyForwardAtk = new Animation2(0.075f, 
-				loadSprite("sprites/luffy/Luffy_Forward+Y_1.png"),
-				loadSprite("sprites/luffy/Luffy_Forward+Y_2.png"),
-				loadSprite("sprites/luffy/Luffy_Forward+Y_3.png"),
-				loadSprite("sprites/luffy/Luffy_Forward+Y_4.png"),
-				loadSprite("sprites/luffy/Luffy_Forward+Y_5.png"),
-				loadSprite("sprites/luffy/Luffy_Forward+Y_6.png"),
-				loadSprite("sprites/luffy/Luffy_Forward+Y_7.png"),
-				loadSprite("sprites/luffy/Luffy_Forward+Y_8.png")
+				loadSprite("sprites/luffy/Luffy_Forward_Y_1.png"),
+				loadSprite("sprites/luffy/Luffy_Forward_Y_2.png"),
+				loadSprite("sprites/luffy/Luffy_Forward_Y_3.png"),
+				loadSprite("sprites/luffy/Luffy_Forward_Y_4.png"),
+				loadSprite("sprites/luffy/Luffy_Forward_Y_5.png"),
+				loadSprite("sprites/luffy/Luffy_Forward_Y_6.png"),
+				loadSprite("sprites/luffy/Luffy_Forward_Y_7.png"),
+				loadSprite("sprites/luffy/Luffy_Forward_Y_8.png")
 				);
 		luffyJumpUp = new Animation2(0.075f,
 				loadSprite("sprites/luffy/Luffy_Jump_1.png"),
@@ -188,96 +192,108 @@ public class Assets {
 				loadSprite("sprites/luffy/luffy_hurt_4.png"),
 				loadSprite("sprites/luffy/luffy_hurt_5.png"),
 				loadSprite("sprites/luffy/luffy_hurt_6.png"),
-				loadSprite("sprites/luffy/luffy_hurt_7.png"),
-				loadSprite("sprites/luffy/luffy_hurt_8.png"),
-				loadSprite("sprites/luffy/luffy_hurt_9.png"),
-				loadSprite("sprites/luffy/luffy_hurt_10.png"),
-				loadSprite("sprites/luffy/luffy_hurt_11.png")
+				loadSprite("sprites/luffy/luffy_hurt_7.png")
 				);
 	}
 	
 	private static void loadAce(){
 		aceStand = new Animation2(0.2f, 
-				loadSprite("sprites/Ace/ace_stance-1.png"),
-				loadSprite("sprites/Ace/ace_stance-2.png"),
-				loadSprite("sprites/Ace/ace_stance-3.png"),
-				loadSprite("sprites/Ace/ace_stance-2.png"),
-				loadSprite("sprites/Ace/ace_stance-1.png")
+				loadSprite("sprites/Ace/ace_stance_1.png"),
+				loadSprite("sprites/Ace/ace_stance_2.png"),
+				loadSprite("sprites/Ace/ace_stance_3.png"),
+				loadSprite("sprites/Ace/ace_stance_2.png"),
+				loadSprite("sprites/Ace/ace_stance_1.png")
 				);
 		
-		aceRun = new Animation2(0.075f, 
-				loadSprite("sprites/Ace/ace_run-1.png"),
-				loadSprite("sprites/Ace/ace_run-2.png"),
-				loadSprite("sprites/Ace/ace_run-3.png"),
-				loadSprite("sprites/Ace/ace_run-4.png"),
-				loadSprite("sprites/Ace/ace_run-5.png"),
-				loadSprite("sprites/Ace/ace_run-6.png"),
-				loadSprite("sprites/Ace/ace_run-7.png"),
-				loadSprite("sprites/Ace/ace_run-8.png")
+		aceRun = new Animation2(0.1f, 
+				loadSprite("sprites/Ace/ace_run_1.png"),
+				loadSprite("sprites/Ace/ace_run_2.png"),
+				loadSprite("sprites/Ace/ace_run_3.png"),
+				loadSprite("sprites/Ace/ace_run_4.png"),
+				loadSprite("sprites/Ace/ace_run_5.png"),
+				loadSprite("sprites/Ace/ace_run_6.png"),
+				loadSprite("sprites/Ace/ace_run_7.png"),
+				loadSprite("sprites/Ace/ace_run_8.png")
 				);
 		
-		aceAtk = new Animation2(0.1f, 
-				loadSprite("sprites/Ace/ace_B-1.png"),
-				loadSprite("sprites/Ace/ace_B-2.png"),
-				loadSprite("sprites/Ace/ace_B-3.png"),
-				loadSprite("sprites/Ace/ace_B-4.png"),
-				loadSprite("sprites/Ace/ace_B-5.png"),
-				loadSprite("sprites/Ace/ace_B-6.png")
+		aceAtk = new Animation2(0.075f, 
+				loadSprite("sprites/Ace/ace_B_1.png"),
+				loadSprite("sprites/Ace/ace_B_2.png"),
+				loadSprite("sprites/Ace/ace_B_3.png"),
+				loadSprite("sprites/Ace/ace_B_4.png"),
+				loadSprite("sprites/Ace/ace_B_5.png"),
+				loadSprite("sprites/Ace/ace_B_6.png")
 				);
 		
 		aceForwardAtk = new Animation2(0.075f,
-				loadSprite("sprites/Ace/ace_Ae+B-1.png"),
-				loadSprite("sprites/Ace/ace_Ae+B-2.png"),
-				loadSprite("sprites/Ace/ace_Ae+B-3.png"),
-				loadSprite("sprites/Ace/ace_Ae+B-4.png"),
-				loadSprite("sprites/Ace/ace_Ae+B-5.png"),
-				loadSprite("sprites/Ace/ace_Ae+B-6.png"),
-				loadSprite("sprites/Ace/ace_Ae+B-7.png"),
-				loadSprite("sprites/Ace/ace_Ae+B-8.png"),
-				loadSprite("sprites/Ace/ace_Ae+B-9.png"),
-				loadSprite("sprites/Ace/ace_Ae+B-10.png"),
-				loadSprite("sprites/Ace/ace_Ae+B-11.png"),
-				loadSprite("sprites/Ace/ace_Ae+B-12.png")
+				loadSprite("sprites/Ace/ace_Ae_B_1.png"),
+				loadSprite("sprites/Ace/ace_Ae_B_2.png"),
+				loadSprite("sprites/Ace/ace_Ae_B_3.png"),
+				loadSprite("sprites/Ace/ace_Ae_B_4.png"),
+				loadSprite("sprites/Ace/ace_Ae_B_5.png"),
+				loadSprite("sprites/Ace/ace_Ae_B_6.png"),
+				loadSprite("sprites/Ace/ace_Ae_B_7.png"),
+				loadSprite("sprites/Ace/ace_Ae_B_8.png"),
+				loadSprite("sprites/Ace/ace_Ae_B_9.png"),
+				loadSprite("sprites/Ace/ace_Ae_B_10.png"),
+				loadSprite("sprites/Ace/ace_Ae_B_11.png"),
+				loadSprite("sprites/Ace/ace_Ae_B_12.png")
 				);
 		
 		aceJumpUp = new Animation2(0.05f, 
-				loadSprite("sprites/Ace/ace_jump-1.png"),
-				loadSprite("sprites/Ace/ace_jump-2.png"),
-				loadSprite("sprites/Ace/ace_jump-3.png"),
-				loadSprite("sprites/Ace/ace_jump-4.png"),
-				loadSprite("sprites/Ace/ace_jump-5.png"),
-				loadSprite("sprites/Ace/ace_jump-6.png"),
-				loadSprite("sprites/Ace/ace_jump-7.png"),
-				loadSprite("sprites/Ace/ace_jump-8.png"),
-				loadSprite("sprites/Ace/ace_jump-9.png"),
-				loadSprite("sprites/Ace/ace_jump-10.png"),
-				loadSprite("sprites/Ace/ace_jump-11.png"),
-				loadSprite("sprites/Ace/ace_jump-12.png")
+				loadSprite("sprites/Ace/ace_jump_1.png"),
+				loadSprite("sprites/Ace/ace_jump_2.png"),
+				loadSprite("sprites/Ace/ace_jump_3.png"),
+				loadSprite("sprites/Ace/ace_jump_4.png"),
+				loadSprite("sprites/Ace/ace_jump_5.png"),
+				loadSprite("sprites/Ace/ace_jump_6.png"),
+				loadSprite("sprites/Ace/ace_jump_7.png"),
+				loadSprite("sprites/Ace/ace_jump_8.png"),
+				loadSprite("sprites/Ace/ace_jump_9.png"),
+				loadSprite("sprites/Ace/ace_jump_10.png"),
+				loadSprite("sprites/Ace/ace_jump_11.png"),
+				loadSprite("sprites/Ace/ace_jump_12.png")
 				);
 		
 		aceJumpDown = new Animation2(0.05f,
-				loadSprite("sprites/Ace/ace_jump-8.png"),
-				loadSprite("sprites/Ace/ace_jump-9.png"),
-				loadSprite("sprites/Ace/ace_jump-8.png"),
-				loadSprite("sprites/Ace/ace_jump-9.png"),
-				loadSprite("sprites/Ace/ace_jump-8.png"),
-				loadSprite("sprites/Ace/ace_jump-9.png"),
-				loadSprite("sprites/Ace/ace_jump-8.png"),
-				loadSprite("sprites/Ace/ace_jump-9.png"),
-				loadSprite("sprites/Ace/ace_jump-8.png"),
-				loadSprite("sprites/Ace/ace_jump-9.png"),
-				loadSprite("sprites/Ace/ace_jump-10.png"),
-				loadSprite("sprites/Ace/ace_jump-11.png"),
-				loadSprite("sprites/Ace/ace_jump-12.png")
+				loadSprite("sprites/Ace/ace_jump_8.png"),
+				loadSprite("sprites/Ace/ace_jump_9.png"),
+				loadSprite("sprites/Ace/ace_jump_8.png"),
+				loadSprite("sprites/Ace/ace_jump_9.png"),
+				loadSprite("sprites/Ace/ace_jump_8.png"),
+				loadSprite("sprites/Ace/ace_jump_9.png"),
+				loadSprite("sprites/Ace/ace_jump_8.png"),
+				loadSprite("sprites/Ace/ace_jump_9.png"),
+				loadSprite("sprites/Ace/ace_jump_8.png"),
+				loadSprite("sprites/Ace/ace_jump_9.png"),
+				loadSprite("sprites/Ace/ace_jump_10.png"),
+				loadSprite("sprites/Ace/ace_jump_11.png"),
+				loadSprite("sprites/Ace/ace_jump_12.png")
 				);
+		aceHurt = new Animation2(0.05f,
+				loadSprite("sprites/Ace/ace_hurt_1.png"),
+				loadSprite("sprites/Ace/ace_hurt_2.png"),
+				loadSprite("sprites/Ace/ace_hurt_3.png"),
+				loadSprite("sprites/Ace/ace_hurt_4.png"),
+				loadSprite("sprites/Ace/ace_hurt_5.png")
+				);
+		
+		aceDead = new Animation2(0.05f,
+				loadSprite("sprites/Ace/ace_dead_1.png"),
+				loadSprite("sprites/Ace/ace_dead_2.png"),
+				loadSprite("sprites/Ace/ace_dead_3.png"),
+				loadSprite("sprites/Ace/ace_dead_4.png"),
+				loadSprite("sprites/Ace/ace_dead_5.png")
+				);;
 	}
 	
 	private static void loadEtc(){
-		bg_mainMenu = loadTexture("dark-wood_158357.jpg");
+//		bg_mainMenu = loadTexture("dark-wood_158357.jpg");
 		map_1 = loadTexture("maps/test_map_1.png");
 		blood = loadTexture("Materials/blood.png");
-		blood_tunk = loadTexture("Materials/blood_luffy.png");
-		bg = loadTexture("Materials/bg.png");
+		blood_luffy = loadTexture("Materials/blood_luffy.png");
+		blood_ace = loadTexture("Materials/blood_ace.png");
+		bg = loadTexture("Materials/BG.png");
 		multiplayer = loadTexture("Materials/multiplayer.png");
 		multiplayer_onclick = loadTexture("Materials/multiplayer_onclick.png");
 		credit = loadTexture("Materials/credit.png");
@@ -302,24 +318,25 @@ public class Assets {
 		left_onclick = loadTexture("Materials/left_onclick.png");
 		right = loadTexture("Materials/right.png");
 		right_onclick = loadTexture("Materials/right_onclick.png");
-		map_alale = loadTexture("Materials/alale.png");
-		map_deathnote = loadTexture("Materials/deathnote.png");
-		map_dragonball= loadTexture("Materials/dragonball.png");
-		map_jojo = loadTexture("Materials/jojo.png");
-		map_naruto = loadTexture("Materials/naruto.png");
-		map_saintseiya = loadTexture("Materials/saintseiya.png");
-		state_alale = loadTexture("Materials/alale_stage.png");
-		state_deathnote = loadTexture("Materials/deathnote_stage.png");
-		state_dragonball= loadTexture("Materials/dragonball_stage.png");
-		state_jojo = loadTexture("Materials/jojo_stage.png");
-		state_naruto = loadTexture("Materials/naruto_stage.png");
-		state_saintseiya = loadTexture("Materials/saintseiya_stage.png");
+		map_alale = loadTexture("maps/alale.png");
+		map_deathnote = loadTexture("maps/deathnote.png");
+		map_dragonball= loadTexture("maps/dragonball.png");
+		map_jojo = loadTexture("maps/jojo.png");
+		map_naruto = loadTexture("maps/naruto.png");
+		map_saintseiya = loadTexture("maps/saintseiya.png");
+		stage_alale = loadTexture("Materials/alale_stage.png");
+		stage_deathnote = loadTexture("Materials/deathnote_stage.png");
+		stage_dragonball= loadTexture("Materials/dragonball_stage.png");
+		stage_jojo = loadTexture("Materials/jojo_stage.png");
+		stage_naruto = loadTexture("Materials/naruto_stage.png");
+		stage_saintseiya = loadTexture("Materials/saintseiya_stage.png");
 		play = loadTexture("Materials/play.png");
 		play_onclick = loadTexture("Materials/play_onclick.png");
-		entername = loadTexture("Materials/Enter_name.png");
+		entername = loadTexture("Materials/Enter_Name.png");
 		nametag = loadTexture("Materials/nametag.png");
 		ipaddress = loadTexture("Materials/IP_Address.png");
-//		howtoplay_bg = loadTexture("Materials/How_to_play.png");
+		howtoplay_bg = loadTexture("Materials/How_to_play.png");
+		credit_bg = loadTexture("Materials/Members.png");
 		click = loadSound("sound/029.mp3");
 		atk = loadSound("sound/01_Luffy_B_audio.mp3");
 		atk2 = loadSound("sound/014.mp3");

@@ -45,6 +45,8 @@ public class JoinServerController extends GameController {
 			try {Thread.sleep(50);} catch (InterruptedException e) {}
 			game.setScreen(new EnterNameScreen(game));
 		}
+//		InetAddress address = game.client.getClient().discoverHost(52227, 5000);
+//	    System.out.println(address);
 		if(screen.boundJoin.overlaps(pointer)){
 			game.batch.draw(Assets.join_onclick, screen.width-(Assets.join.getWidth()/2), Gdx.graphics.getHeight()-380);
 			try {Thread.sleep(100);} catch (InterruptedException e) {}
@@ -57,6 +59,7 @@ public class JoinServerController extends GameController {
 							try {
 								game.client.tryConnect();
 								isConnect = 1;
+								game.client.sendData(game.player);
 								return;
 							} catch (IOException e){
 								isConnect = -1;
@@ -65,7 +68,8 @@ public class JoinServerController extends GameController {
 					}
 				}.start();
 			}
-		}else if(screen.boundBack.overlaps(pointer)){
+		}
+		else if(screen.boundBack.overlaps(pointer)){
 			game.batch.draw(Assets.back_onclick, 30, 30);
 			if(Gdx.input.isButtonPressed(0)){
 				Assets.click.play();

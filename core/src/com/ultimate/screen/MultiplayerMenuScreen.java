@@ -2,7 +2,6 @@ package com.ultimate.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
 import com.ultimate.controller.MultiplayerMenuController;
 import com.ultimate.game.Assets;

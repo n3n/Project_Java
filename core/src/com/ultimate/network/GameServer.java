@@ -1,7 +1,6 @@
 package com.ultimate.network;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -26,16 +25,13 @@ import com.ultimate.unit.Vegeta;
 public class GameServer {
 	
 	static Server server;
-	int port = 52227;
-	private ArrayList<Integer> idList; // Keep connection id 
+	int port = 52227; 
 	UltimateFight game;
 	
 	public GameServer(final UltimateFight game){
 		System.out.println("Create server");
-		idList = new ArrayList<Integer>();
 		this.game = game;
-		game.world = new GameWorld(game);
-		game.world.addPlayer(game.player.getPlayerID(), game.player);
+		
 		
 		// Initial game server
 		server = new Server();
@@ -50,11 +46,19 @@ public class GameServer {
 		}
 		// Start server
 		server.start();
+		
 	}
 	
+	public static Server getServer() {
+		return server;
+	}
+
+	public static void setServer(Server server) {
+		GameServer.server = server;
+	}
+
 	public void sendToAllConnention(Object object){
 		server.sendToAllUDP(object);
-		server.sendToAllTCP(object);
 	}
 	
 	/**
@@ -67,14 +71,23 @@ public class GameServer {
 				if (data instanceof Player) {
 					Player player = (Player)data;
 					game.world.addPlayer(player.getPlayerID(), player);
+					MapPacket packet = new MapPacket();
+					packet.setId(game.world.getMapID());
+					connection.sendTCP(packet);
 				}
 				if(data instanceof Skill){
 					Skill object = (Skill)data;
 					game.world.addObject(object);
 				}
+				if(data instanceof DisconnectPacket){
+					System.out.println("...");
+					DisconnectPacket packet = (DisconnectPacket)data;
+					
+					game.world.removePlayer(packet.getID());
+				}
 			}
 			public void connected(Connection connection){
-				System.out.println("Has connected");
+//				System.out.println("Has connected");
 			}
 		});
 	}
@@ -89,5 +102,8 @@ public class GameServer {
 		server.getKryo().register(Vector2.class);
 		server.getKryo().register(Rectangle.class);
 		server.getKryo().register(Skill.class);
+		server.getKryo().register(DisconnectPacket.class);
+		server.getKryo().register(MapPacket.class);
+		server.getKryo().register(cntTimePacket.class);
 	}
 }
